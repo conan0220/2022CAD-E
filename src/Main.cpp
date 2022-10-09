@@ -3,4 +3,5 @@
 int main()
 {
     Application app;
+    std::cin.get();
 }
