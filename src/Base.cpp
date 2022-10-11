@@ -20,4 +20,14 @@ void Base::updatePolygon()
         bg::append(polygon.outer(), arc.begin);
         bg::append(polygon.outer(), arc.center);
     }
+    
+    // int usedLine = 0;   // Quantity of line thrown into polygon
+    // int usedArc = 0;    // Quantity of arc thrown into polygon
+    // for (; usedLine + usedArc < lines.size() + arcs.size(); )
+    // {
+    //     if (equal(lines[usedLine].first, lines[usedLine].second))
+    //     {
+            
+    //     }
+    // }
 }

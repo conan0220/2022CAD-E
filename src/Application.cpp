@@ -2,7 +2,7 @@
 #include "Text.h"
 #include "Assembly.h"
 #include "Copper.h"
-#include "silkscreen.h"
+#include "Silkscreen.h"
 
 Application::Application()
 {
