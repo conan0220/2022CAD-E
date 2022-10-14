@@ -3,14 +3,15 @@
 
 #include "Base.h"
 
-/// @brief A  componment
+/// @brief A  component
 class Assembly : public Base
 {
 public:
+    static double assemblyGap;
+  
     Assembly() {}
     ~Assembly() {}
 
-    static double assemblyGap;
 };
 
 

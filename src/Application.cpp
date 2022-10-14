@@ -6,18 +6,19 @@
 
 Application::Application()
 {
-    // read data and set in specific componment
+    // read data and set in specific component
     preProcessData();
+    std::cout << bg::extra::getDegree(assembly.arcs[0].center, assembly.arcs[0].begin);
 }
 
 /*
- * Description: read data and set it in specific componment
+ * Description: read data and set it in specific component
  * Parameters: None
  */
 void Application::preProcessData()
 {
     std::vector<std::string> text = loadFile("../res/testing-data.txt");
-    std::string targetComponment = "";  // present componment we focus
+    std::string targetComponent = "";  // present component we focus
     for (std::string str : text)    // line by line
     {
         std::vector<double> data = getDataFromString(str);      //  numbers in the string
@@ -26,13 +27,31 @@ void Application::preProcessData()
         if (isTargetInString(str, "line"))
         {
             Line dataTemp = Line(Point(data[0], data[1]), Point(data[2], data[3]));
-            targetComponment == "assembly" ? assembly.lines.push_back(dataTemp) : coppers.back().lines.push_back(dataTemp); 
+            if (targetComponent == "assembly")
+            {
+                assembly.lines.push_back(dataTemp);
+                assembly.updatePolygon("line");
+            }
+            else if (targetComponent == "copper")
+            {
+                coppers.back().lines.push_back(dataTemp);
+                coppers.back().updatePolygon("line");
+            }
         }
         else if (isTargetInString(str, "arc"))
         {
             bool clockWiseTemp = !isTargetInString(str, "CCW");
             Arc dataTemp = Arc(Point(data[0], data[1]), Point(data[2], data[3]), Point(data[4], data[5]), clockWiseTemp);
-            targetComponment == "assembly" ? assembly.arcs.push_back(dataTemp) : coppers.back().arcs.push_back(dataTemp);
+            if (targetComponent == "assembly")
+            {
+                assembly.arcs.push_back(dataTemp);
+                assembly.updatePolygon("arc");
+            }
+            else if (targetComponent == "copper")
+            {
+                coppers.back().arcs.push_back(dataTemp);
+                coppers.back().updatePolygon("arc");
+            }
         }
         else if (isTargetInString(str, "coppergap"))
         {
@@ -40,7 +59,7 @@ void Application::preProcessData()
         }
         else if (isTargetInString(str, "copper"))
         {
-            targetComponment = "copper";
+            targetComponent = "copper";
             coppers.push_back(Copper());
         }
         else if (isTargetInString(str, "assemblygap"))
@@ -49,7 +68,7 @@ void Application::preProcessData()
         }
         else if (isTargetInString(str, "assembly"))
         {
-            targetComponment = "assembly";
+            targetComponent = "assembly";
         }
         else if (isTargetInString(str, "silkscreenlen"))
         {

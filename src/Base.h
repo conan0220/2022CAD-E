@@ -13,13 +13,13 @@ public:
     ~Base() {}
     
     double getArea();
+    void updatePolygon(std::string type);
     
     std::vector<Line> lines;
     std::vector<Arc> arcs;
     Polygon polygon;    // closed path of points
 
 private:
-    void updatePolygon();
 };
 
 #endif /* _BASE_H_ */

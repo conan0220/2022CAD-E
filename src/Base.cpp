@@ -1,33 +1,38 @@
 #include "Base.h"
 #include "Geometry.h"
 
+#include "Math.h"
+#include <cmath>
+
+/*
+ * Description: get polygon area, you must use updatePolygon() to push data into polygon first
+ * Parameters: None
+ */
 double Base::getArea()
 {
-    updatePolygon();
-    return abs(bg::area(polygon));
-}
-
-void Base::updatePolygon()
-{
-    polygon.clear(); 
-    for (Line line : lines)
-    {
-        bg::append(polygon.outer(), line.first);
-    }
-
+    double area = abs(bg::area(polygon));
     for (Arc arc : arcs)
     {
-        bg::append(polygon.outer(), arc.begin);
-        bg::append(polygon.outer(), arc.center);
+        
     }
-    
-    // int usedLine = 0;   // Quantity of line thrown into polygon
-    // int usedArc = 0;    // Quantity of arc thrown into polygon
-    // for (; usedLine + usedArc < lines.size() + arcs.size(); )
-    // {
-    //     if (equal(lines[usedLine].first, lines[usedLine].second))
-    //     {
-            
-    //     }
-    // }
+    return area;
 }
+
+/*
+ * Description: add latest line or arc to polygon
+ * Parameters: type(string)
+ * type -> "line" or "arc"
+ */
+void Base::updatePolygon(std::string type)
+{
+    if (type == "line")
+    {
+        bg::append(polygon.outer(), lines.back().first);
+    }
+    else if (type == "arc")
+    {
+        bg::append(polygon.outer(), arcs.back().begin);
+        bg::append(polygon.outer(), arcs.back().center);
+    }
+}
+

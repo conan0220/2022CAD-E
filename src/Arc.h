@@ -16,9 +16,11 @@ public:
     Point center;
     bool clockWise;
     double radius;
+    double theta;
 
 private:
-    void calculateRadius();
+    double getTheta() const;
+    
 };
 
 #endif /* _ARC_H_ */

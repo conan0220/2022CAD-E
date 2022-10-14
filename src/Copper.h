@@ -3,14 +3,15 @@
 
 #include "Base.h"
 
-/// @brief A  componment
+/// @brief A  component
 class Copper : public Base
 {
 public:
+    static double copperGap;
+    
     Copper() {};
     ~Copper() {};
 
-    static double copperGap;
 };
 
 

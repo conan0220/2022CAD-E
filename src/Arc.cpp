@@ -1,13 +1,28 @@
 #include "Arc.h"
+#include "Math.h"
 #include <iostream>
 
 Arc::Arc(Point begin, Point end, Point center, bool clockWise)
     : begin(begin), end(end), center(center), clockWise(clockWise)
 {
-    calculateRadius();
+    radius = bg::distance(begin, center);
+    theta = getTheta();
 }
 
-void Arc::calculateRadius()
+double Arc::getTheta() const
 {
-    radius = sqrt(pow(begin.x() - center.y(), 2) + pow(begin.y() - center.y(), 2));
+    // if the start and end point are identical then denote that arc is a circle
+    if (bg::extra::equal(begin, end))
+        return 360;
+
+    double theta = acos(cosineLaw(begin, end, center)) * 180 / M_PI;
+
+    // identify the direction of arc then modify theta
+    //
+    //      code...
+    //
+
+    return theta;
+
+
 }

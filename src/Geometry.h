@@ -4,26 +4,29 @@
 namespace bg = boost::geometry;
 typedef bg::model::d2::point_xy<double> Point;      // point
 typedef bg::model::segment<Point> Line;             // line
-typedef bg::model::polygon<Point, true, true> Polygon;          // Points
+typedef bg::model::polygon<Point> Polygon;          // Points
 
 #ifndef _GEOMETRY_H_
 #define _GEOMETRY_H_
 
-/*
- * Description: check if two Point identical
- * Parameters: p1(Point), p2(Point)
- * p1 -> first point
- * p2 -> second point
- */
+namespace boost { namespace geometry
+{
+
+namespace extra
+{
+
 bool equal(const Point& p1, const Point& p2);
 
-/*
- * Description: check if two Line identical
- * Parameters: l1(Line), l2(Line)
- * l1 -> first line
- * l2 -> second line
- */
 bool equal(const Line& l1, const Line& l2);
 
+double getAngle(const Point& center, const Point& point);
+
+double getDegree(const Point& center, const Point& point);
+
+}   // namespace boost::geometry::extra
+
+}   // namespace boost::geometry
+
+}   // namespace boost
 
 #endif /* _GEOMETRY_H_*/
