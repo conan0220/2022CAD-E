@@ -1,3 +1,13 @@
+/*
+ * @Author: conan0220 conanhuang8382@gmail.com
+ * @Date: 2022-10-11 22:04:28
+ * @LastEditors: conan0220 conanhuang8382@gmail.com
+ * @LastEditTime: 2022-10-17 00:49:36
+ * @FilePath: \2022CAD-E\src\Geometry.h
+ * @Description: This library deals exclusively with geometry.
+ * 
+ * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
+ */
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
 
@@ -12,6 +22,7 @@ typedef bg::model::polygon<Point> Polygon;          // Points
 namespace boost { namespace geometry
 {
 
+// extra function set under boost::geometry
 namespace extra
 {
 

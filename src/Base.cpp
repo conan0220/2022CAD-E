@@ -4,9 +4,10 @@
 #include "Math.h"
 #include <cmath>
 
-/*
- * Description: get polygon area, you must use updatePolygon() to push data into polygon first
- * Parameters: None
+
+/**
+ * Get polygon area, you must use updatePolygon() to push data into polygon first
+ * @return {double}
  */
 double Base::getArea()
 {
@@ -18,10 +19,12 @@ double Base::getArea()
     return area;
 }
 
-/*
- * Description: add latest line or arc to polygon
- * Parameters: type(string)
- * type -> "line" or "arc"
+
+
+/**
+ * Add latest line or arc back to polygon.
+ * @param type "line" or "arc".
+ * @return None.
  */
 void Base::updatePolygon(std::string type)
 {

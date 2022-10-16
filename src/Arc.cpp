@@ -6,7 +6,8 @@ Arc::Arc(Point begin, Point end, Point center, bool clockWise)
     : begin(begin), end(end), center(center), clockWise(clockWise)
 {
     radius = bg::distance(begin, center);
-    theta = getTheta();
+    beginDegree = bg::extra::getDegree(center, begin);
+    endDegree = bg::extra::getDegree(center, end);
 }
 
 double Arc::getTheta() const
@@ -15,7 +16,7 @@ double Arc::getTheta() const
     if (bg::extra::equal(begin, end))
         return 360;
 
-    double theta = acos(cosineLaw(begin, end, center)) * 180 / M_PI;
+    double theta = acos(math::cosineLaw(begin, end, center)) * 180 / M_PI;
 
     // identify the direction of arc then modify theta
     //

@@ -16,7 +16,8 @@ public:
     Point center;
     bool clockWise;
     double radius;
-    double theta;
+    double beginDegree;
+    double endDegree;
 
 private:
     double getTheta() const;

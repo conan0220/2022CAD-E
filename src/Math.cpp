@@ -1,12 +1,25 @@
+/*
+ * @Author: conan0220 conanhuang8382@gmail.com
+ * @Date: 2022-10-13 13:23:01
+ * @LastEditors: conan0220 conanhuang8382@gmail.com
+ * @LastEditTime: 2022-10-17 00:45:59
+ * @FilePath: \2022CAD-E\src\Math.cpp
+ * @Description: Bunch of mathematical logical.
+ * 
+ * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
+ */
 #include "Math.h"
 #include <math.h>
 
-/*
- * Description: Cosine Law, return cos(p3_angle)
- * Parameters: p1(Point), p2(Point), p3(Point)
- * p1 -> point
- * p2 -> point
- * p3 -> target point
+namespace math
+{
+
+/**
+ * Cosine Law, cos(p3_angle) = (p1^2 + p2^2 - p3^2) / (2 * p1 * p2).
+ * @param p1 
+ * @param p2
+ * @param p3 Target point.
+ * @return Return cos(p3_angle).
  */
 double cosineLaw(const Point& p1, const Point& p2, const Point& p3)
 {
@@ -18,4 +31,4 @@ double cosineLaw(const Point& p1, const Point& p2, const Point& p3)
     return cos;
 }
 
-
+}

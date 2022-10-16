@@ -1,39 +1,50 @@
+/*
+ * @Author: conan0220 conanhuang8382@gmail.com
+ * @Date: 2022-10-11 22:04:28
+ * @LastEditors: conan0220 conanhuang8382@gmail.com
+ * @LastEditTime: 2022-10-17 00:49:26
+ * @FilePath: \2022CAD-E\src\Geometry.cpp
+ * @Description: This library deals exclusively with geometry.
+ * 
+ * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
+ */
 #include "Geometry.h"
 #include "Math.h"
 
 namespace boost { namespace geometry
 {
 
+// extra function set under boost::geometry
 namespace extra 
 {
-/*
- * Description: check if two Point identical
- * Parameters: p1(Point), p2(Point)
- * p1 -> first point
- * p2 -> second point
+
+/**
+ * Check if two points identical.
+ * @param p1 First point.
+ * @param p2 Second point.
+ * @return If p1 identical to p2 return true, otherwise false.
  */
 bool equal(const Point& p1, const Point& p2)
 {
     return p1.x() == p2.x() && p1.y() == p2.y();
 }
 
-/*
- * Description: check if two Line identical
- * Parameters: l1(Line), l2(Line)
- * l1 -> first line
- * l2 -> second line
+/**
+ * Check if two lines identical.
+ * @param p1 First line.
+ * @param p2 Second line.
+ * @return If l1 identical to l2 return true, otherwise false.
  */
 bool equal(const Line& l1, const Line& l2)
 {
     return (equal(l1.first, l2.first) && equal(l1.second, l2.second)) || (equal(l1.first, l2.second) && equal(l1.second, l2.first));
 }
 
-
-/*
- * Description: get the angle of point 
- * Parameters: center(Point), point(Point)
- * center -> center point
- * point -> target point
+/**
+ * Get the angle counterclockwise from the first quadrant. For example, center = (0, 0), point = (-1, 0), return 3.14159...
+ * @param center 
+ * @param point
+ * @return Return angle counterclockwise from the first quadrant.
  */
 double getAngle(const Point& center, const Point& point)
 {
@@ -61,11 +72,11 @@ double getAngle(const Point& center, const Point& point)
     return angle;
 }
 
-/*
- * Description: get the degree of point 
- * Parameters: center(Point), point(Point)
- * center -> center point
- * point -> target point
+/**
+ * Get the degree counterclockwise from the first quadrant. For example, center = (0, 0), point = (-1, 0), return 180.
+ * @param center
+ * @param point
+ * @return Return degree counterclockwise from the first quadrant.
  */
 double getDegree(const Point& center, const Point& point)
 {
@@ -90,6 +101,7 @@ double getDegree(const Point& center, const Point& point)
     else if (x >= 0 && y < 0)        // forth quadrant
         angle = 2 * M_PI - angle;
 
+    // convert to theta
     double degree = angle * 180 / M_PI;
 
     return degree;
