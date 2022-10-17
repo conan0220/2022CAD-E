@@ -18,9 +18,10 @@ public:
     double radius;
     double beginDegree;
     double endDegree;
+    double degree;  // degree between beginDegree and endDegree
 
 private:
-    double getTheta() const;
+    double getDegree_Between_Begin_And_End() const;
     
 };
 

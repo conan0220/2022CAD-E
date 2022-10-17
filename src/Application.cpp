@@ -9,7 +9,7 @@ Application::Application()
 {
     // read data and set in specific component
     preProcessData();
-    std::cout << bg::extra::getDegree(assembly.arcs[0].center, assembly.arcs[0].begin);
+    std::cout << assembly.arcs[0].degree << std::endl;
 }
 
 /**
