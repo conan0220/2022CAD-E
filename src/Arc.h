@@ -11,6 +11,8 @@ public:
     Arc(Point begin, Point end, Point center, bool clockWise);
     ~Arc() {};
 
+    double getArea() const;
+
     Point begin;
     Point end;
     Point center;
