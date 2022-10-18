@@ -2,15 +2,15 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-11 22:04:28
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-10-17 21:51:03
+ * @LastEditTime: 2022-10-18 13:41:02
  * @FilePath: \2022CAD-E\src\Geometry.cpp
  * @Description: This library deals exclusively with geometry.
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
  */
-#define _USE_MATH_DEFINES
 #include "Geometry.h"
 #include "Math.h"
+
 
 namespace boost { namespace geometry
 {
@@ -64,11 +64,11 @@ double getAngle(const Point& center, const Point& point)
     if (x >= 0 && y >= 0)             // first quadrant
         angle = angle;
     else if (x < 0 && y >= 0)         // second quadrant
-        angle = M_PI - angle;
+        angle = PI - angle;
     else if (x < 0 && y < 0)         // third quadrant
-        angle += M_PI;
+        angle += PI;
     else if (x >= 0 && y < 0)        // forth quadrant
-        angle = 2 * M_PI - angle;
+        angle = 2 * PI - angle;
 
     return angle;
 }
@@ -96,14 +96,14 @@ double getDegree(const Point& center, const Point& point)
     if (x >= 0 && y >= 0)             // first quadrant
         angle = angle;
     else if (x < 0 && y >= 0)         // second quadrant
-        angle = M_PI - angle;
+        angle = PI - angle;
     else if (x < 0 && y < 0)         // third quadrant
-        angle += M_PI;
+        angle += PI;
     else if (x >= 0 && y < 0)        // forth quadrant
-        angle = 2 * M_PI - angle;
+        angle = 2 * PI - angle;
 
     // convert to theta
-    double degree = angle * 180 / M_PI;
+    double degree = angle * 180 / PI;
 
     return degree;
 }

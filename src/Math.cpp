@@ -2,14 +2,13 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-13 13:23:01
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-10-17 00:45:59
+ * @LastEditTime: 2022-10-18 13:29:39
  * @FilePath: \2022CAD-E\src\Math.cpp
  * @Description: Bunch of mathematical logical.
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
  */
 #include "Math.h"
-#include <math.h>
 
 namespace math
 {

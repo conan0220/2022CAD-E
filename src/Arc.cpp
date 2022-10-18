@@ -2,6 +2,7 @@
 #include "Math.h"
 #include <iostream>
 
+
 Arc::Arc(Point begin, Point end, Point center, bool clockWise)
     : begin(begin), end(end), center(center), clockWise(clockWise)
 {
@@ -13,7 +14,7 @@ Arc::Arc(Point begin, Point end, Point center, bool clockWise)
 
 double Arc::getArea() const 
 {
-    return M_PI * pow(radius, 2) * (degree / 360);
+    return PI * pow(radius, 2) * (degree / 360);
 }
 
 /**
