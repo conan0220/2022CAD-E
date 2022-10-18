@@ -11,9 +11,14 @@ Arc::Arc(Point begin, Point end, Point center, bool clockWise)
     degree = getDegree_Between_Begin_And_End();
 }
 
+double Arc::getArea() const 
+{
+    return M_PI * pow(radius, 2) * (degree / 360);
+}
+
 /**
  * Get degree between beginDegree and endDegree, so you have to set beginDegree and endDegree first.
- * @return degree
+ * @return Degree.
  */
 double Arc::getDegree_Between_Begin_And_End() const
 {

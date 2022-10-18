@@ -4,7 +4,7 @@ silkscreenlen,0.4
 assembly
 line,0,0,10,0
 line,10,0,10,4
-arc,1,0,0,1,0,0,CW
+arc,1,0,1,0,0,0,CW
 line,10,6,10,10
 line,10,10,0,10
 line,0,10,0,0
