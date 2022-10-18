@@ -2,12 +2,13 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-11 22:04:28
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-10-17 00:49:26
+ * @LastEditTime: 2022-10-17 21:51:03
  * @FilePath: \2022CAD-E\src\Geometry.cpp
  * @Description: This library deals exclusively with geometry.
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
  */
+#define _USE_MATH_DEFINES
 #include "Geometry.h"
 #include "Math.h"
 
