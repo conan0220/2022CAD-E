@@ -18,6 +18,28 @@ double Arc::getArea() const
 }
 
 /**
+ * Get the coordinate depend on theta. Theta starts from beginDegree. For example, if theta = 10, then actually theta we find is beginDegree + theta. 
+ * @param theta Theta must be positive, or function will implicitly convert it to positive. Theta should be lower than the member variable "degree". If theta out of range then function will impicitly convert it to member variable "degree". For example, theta = 10, degree = 8, function will convert theta to 8. Theta = -9, degree = 7, function will convert theta to 9 then to 7.
+ * @return Return a vector which contains the coordinate of position on arc. First element is x, second is y.
+ */
+std::vector<double> Arc::getPosition_On_Arc(double theta) const
+{
+    theta = abs(theta);
+
+    if (theta > degree)
+        theta = degree;
+
+    std::vector<double> position;
+    
+    clockWise == true ? theta = beginDegree - theta : theta = beginDegree + theta;
+
+    position.push_back(center.x() + radius * cos(bg::extra::degreeToAngle(theta)));
+    position.push_back(center.y() + radius * sin(bg::extra::degreeToAngle(theta)));
+
+    return position;
+}
+
+/**
  * Get degree between beginDegree and endDegree, so you have to set beginDegree and endDegree first.
  * @return Degree.
  */

@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-11 22:04:28
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-10-18 13:41:02
+ * @LastEditTime: 2022-10-19 03:25:17
  * @FilePath: \2022CAD-E\src\Geometry.cpp
  * @Description: This library deals exclusively with geometry.
  * 
@@ -104,6 +104,20 @@ double getDegree(const Point& center, const Point& point)
 
     // convert to theta
     double degree = angle * 180 / PI;
+
+    return degree;
+}
+
+// Theta to angle. If over 360, function will convert it to 360 below, then transform to angle. Ex. 540 -> 180 -> 3.14159.
+double degreeToAngle(double degree)
+{
+    degree = std::fmod(degree, 360);
+
+    // ex. -30 -> 330
+    if (degree < 0)
+        degree += 360;
+    
+    degree = degree * PI / 180;
 
     return degree;
 }

@@ -34,6 +34,8 @@ double getAngle(const Point& center, const Point& point);
 
 double getDegree(const Point& center, const Point& point);
 
+double degreeToAngle(double degree);
+
 }   // namespace boost::geometry::extra
 
 }   // namespace boost::geometry

@@ -12,7 +12,8 @@ public:
     ~Arc() {};
 
     double getArea() const;
-
+    std::vector<double> getPosition_On_Arc(double theta) const;
+    
     Point begin;
     Point end;
     Point center;
