@@ -14,7 +14,19 @@ double Base::getArea()
     double area = abs(bg::area(polygon));
     for (Arc arc : arcs)
     {
-        
+        std::vector<double> posi = arc.getPosition_On_Arc(arc.degree / 2);
+
+        // detect arc is outer or inner
+        if (bg::within(Point(posi[0], posi[1]), polygon))
+        {
+            // inner, minus arc area
+            area -= arc.getArea();
+        }
+        else
+        {
+            // outer, add arc area
+            area += arc.getArea();
+        }
     }
     return area;
 }

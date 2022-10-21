@@ -9,6 +9,7 @@ Application::Application()
 {
     // read data and set in specific component
     preProcessData();
+    std::cout << assembly.getArea();
 }
 
 /**
