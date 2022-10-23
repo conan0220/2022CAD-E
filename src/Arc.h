@@ -12,7 +12,7 @@ public:
     ~Arc() {};
 
     double getArea() const;
-    std::vector<double> getPosition_On_Arc(double theta) const;
+    std::vector<double> getPositionOnArc(double theta) const;
     
     Point begin;
     Point end;
@@ -24,7 +24,7 @@ public:
     double degree;  // degree between beginDegree and endDegree
 
 private:
-    double getDegree_Between_Begin_And_End() const;
+    double getDegreeBetweenBeginAndEnd() const;
     
 };
 

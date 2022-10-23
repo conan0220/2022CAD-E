@@ -9,7 +9,7 @@ Arc::Arc(Point begin, Point end, Point center, bool clockWise)
     radius = bg::distance(begin, center);
     beginDegree = bg::extra::getDegree(center, begin);
     endDegree = bg::extra::getDegree(center, end);
-    degree = getDegree_Between_Begin_And_End();
+    degree = getDegreeBetweenBeginAndEnd();
 }
 
 double Arc::getArea() const 
@@ -22,7 +22,7 @@ double Arc::getArea() const
  * @param theta Theta must be positive, or function will implicitly convert it to positive. Theta should be lower than the member variable "degree". If theta out of range then function will impicitly convert it to member variable "degree". For example, theta = 10, degree = 8, function will convert theta to 8. Theta = -9, degree = 7, function will convert theta to 9 then to 7.
  * @return Return a vector which contains the coordinate of position on arc. First element is x, second is y.
  */
-std::vector<double> Arc::getPosition_On_Arc(double theta) const
+std::vector<double> Arc::getPositionOnArc(double theta) const
 {
     theta = abs(theta);
 
@@ -43,7 +43,7 @@ std::vector<double> Arc::getPosition_On_Arc(double theta) const
  * Get degree between beginDegree and endDegree, so you have to set beginDegree and endDegree first.
  * @return Degree.
  */
-double Arc::getDegree_Between_Begin_And_End() const
+double Arc::getDegreeBetweenBeginAndEnd() const
 {
     // if the start and end point are identical then denote that arc is a circle
     if (bg::extra::equal(begin, end))
