@@ -2,8 +2,8 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-10 18:32:35
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-10-17 00:51:19
- * @FilePath: \2022CAD-E\src\Text.h
+ * @LastEditTime: 2022-11-11 16:38:44
+ * @FilePath: /2022CAD-E/src/Text.h
  * @Description: This library deals with text.
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
