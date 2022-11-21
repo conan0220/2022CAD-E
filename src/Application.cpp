@@ -1,3 +1,13 @@
+/*
+ * @Author: conan0220 conanhuang8382@gmail.com
+ * @Date: 2022-10-21 20:06:05
+ * @LastEditors: conan0220 conanhuang8382@gmail.com
+ * @LastEditTime: 2022-11-20 19:38:54
+ * @FilePath: \2022CAD-E\src\Application.cpp
+ * @Description: 
+ * 
+ * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
+ */
 #include "Application.h"
 #include "Text.h"
 #include "Assembly.h"
@@ -8,15 +18,15 @@
 Application::Application()
 {
     // read data and set in specific component
-    preProcessData();
-    std::cout << assembly.getArea();
+    preProcessInputData();
+    processSilkscreen();
 }
 
 /**
  * Read data and set it in specific component. For example, Assembly, Copper.
  * @return None.
  */
-void Application::preProcessData()
+void Application::preProcessInputData()
 {
     std::vector<std::string> text = text::loadFile("../res/testing-data.txt");
     std::string targetComponent = "";  // current component we focus
@@ -76,4 +86,19 @@ void Application::preProcessData()
             Silkscreen::silkscreenLen = data[0];
         }
     }
+}
+
+void Application::processSilkscreen()
+{
+    preProcessSilkscreenData();
+}
+
+/**
+ * Put Assembly data into Silkscreens
+ * @return 
+ */
+void Application::preProcessSilkscreenData()
+{
+
+
 }

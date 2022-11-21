@@ -2,8 +2,8 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-17 00:59:36
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-11 15:25:46
- * @FilePath: /2022CAD-E/src/Silkscreen.h
+ * @LastEditTime: 2022-11-20 19:38:48
+ * @FilePath: \2022CAD-E\src\Silkscreen.h
  * @Description: 
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
@@ -21,6 +21,8 @@ public:
 
     Silkscreen() {};
     ~Silkscreen() {};
+
+    void pushFromAssembly(double distance);
 };
 
 
