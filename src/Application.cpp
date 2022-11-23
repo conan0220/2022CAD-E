@@ -2,8 +2,8 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-21 20:06:05
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-20 19:38:54
- * @FilePath: \2022CAD-E\src\Application.cpp
+ * @LastEditTime: 2022-11-23 13:49:06
+ * @FilePath: /2022CAD-E/src/Application.cpp
  * @Description: 
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
@@ -20,6 +20,7 @@ Application::Application()
     // read data and set in specific component
     preProcessInputData();
     processSilkscreen();
+    std::cout << assembly.getArea() << std::endl;
 }
 
 /**
@@ -41,12 +42,12 @@ void Application::preProcessInputData()
             if (targetComponent == "assembly")
             {
                 assembly.lines.push_back(dataTemp);
-                assembly.updatePolygon("line");
+                //assembly.updatePolygon("line");
             }
             else if (targetComponent == "copper")
             {
                 coppers.back().lines.push_back(dataTemp);
-                coppers.back().updatePolygon("line");
+                //coppers.back().updatePolygon("line");
             }
         }
         else if (text::isTargetInString(str, "arc"))
@@ -56,12 +57,12 @@ void Application::preProcessInputData()
             if (targetComponent == "assembly")
             {
                 assembly.arcs.push_back(dataTemp);
-                assembly.updatePolygon("arc");
+                //assembly.updatePolygon("arc");
             }
             else if (targetComponent == "copper")
             {
                 coppers.back().arcs.push_back(dataTemp);
-                coppers.back().updatePolygon("arc");
+                //coppers.back().updatePolygon("arc");
             }
         }
         else if (text::isTargetInString(str, "coppergap"))
@@ -86,6 +87,8 @@ void Application::preProcessInputData()
             Silkscreen::silkscreenLen = data[0];
         }
     }
+
+    assembly.updatePolygon();
 }
 
 void Application::processSilkscreen()
@@ -94,11 +97,11 @@ void Application::processSilkscreen()
 }
 
 /**
- * Put Assembly data into Silkscreens
+ * Put Assembly data into Silkscreens separately
  * @return 
  */
 void Application::preProcessSilkscreenData()
 {
-
+    
 
 }

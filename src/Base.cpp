@@ -1,3 +1,13 @@
+/*
+ * @Author: conan0220 conanhuang8382@gmail.com
+ * @Date: 2022-10-17 01:01:38
+ * @LastEditors: conan0220 conanhuang8382@gmail.com
+ * @LastEditTime: 2022-11-23 13:42:33
+ * @FilePath: /2022CAD-E/src/Base.cpp
+ * @Description: 
+ * 
+ * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
+ */
 #include "Base.h"
 #include "Geometry.h"
 
@@ -14,6 +24,7 @@ double Base::getArea()
     double area = abs(bg::area(polygon));
     for (Arc arc : arcs)
     {
+        // posi[0] -> x, posi[1] -> y
         std::vector<double> posi = arc.getPositionOnArc(arc.degree / 2);
 
         // detect arc is outer or inner
@@ -34,20 +45,36 @@ double Base::getArea()
 
 
 /**
- * Add latest line or arc back to polygon.
- * @param type "line" or "arc".
+ * Add lines and arcs to polygon.
  * @return None.
  */
-void Base::updatePolygon(std::string type)
+void Base::updatePolygon()
 {
-    if (type == "line")
+    for (auto element : lines_arcs)
     {
-        bg::append(polygon.outer(), lines.back().first);
+        // Element type is Line?
+        if (std::holds_alternative<Line>(element))
+        {
+            bg::append(polygon.outer(), lines.back().first);
+        }
+        else if (std::holds_alternative<Arc>(element))
+        {
+            bg::append(polygon.outer(), arcs.back().begin);
+            bg::append(polygon.outer(), arcs.back().center);
+        }
     }
-    else if (type == "arc")
-    {
-        bg::append(polygon.outer(), arcs.back().begin);
-        bg::append(polygon.outer(), arcs.back().center);
-    }
+    
+
+
+
+    // if (type == "line")
+    // {
+    //     bg::append(polygon.outer(), lines.back().first);
+    // }
+    // else if (type == "arc")
+    // {
+    //     bg::append(polygon.outer(), arcs.back().begin);
+    //     bg::append(polygon.outer(), arcs.back().center);
+    // }
 }
 

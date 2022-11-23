@@ -152,4 +152,4 @@ setFigure(pixel=130)
 plot(assemblies, "blue")
 plot(coppers, "red")
 
-plt.show()
+plt.show()              
