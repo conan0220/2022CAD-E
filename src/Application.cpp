@@ -42,11 +42,14 @@ void Application::preProcessInputData()
             if (targetComponent == "assembly")
             {
                 assembly.lines.push_back(dataTemp);
+                assembly.lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
                 //assembly.updatePolygon("line");
             }
             else if (targetComponent == "copper")
             {
                 coppers.back().lines.push_back(dataTemp);
+                coppers.back().lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
+
                 //coppers.back().updatePolygon("line");
             }
         }
@@ -57,11 +60,13 @@ void Application::preProcessInputData()
             if (targetComponent == "assembly")
             {
                 assembly.arcs.push_back(dataTemp);
+                assembly.lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
                 //assembly.updatePolygon("arc");
             }
             else if (targetComponent == "copper")
             {
                 coppers.back().arcs.push_back(dataTemp);
+                coppers.back().lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
                 //coppers.back().updatePolygon("arc");
             }
         }

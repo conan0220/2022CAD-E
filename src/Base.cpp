@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-17 01:01:38
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-23 13:42:33
+ * @LastEditTime: 2022-11-23 14:19:48
  * @FilePath: /2022CAD-E/src/Base.cpp
  * @Description: 
  * 
@@ -55,12 +55,12 @@ void Base::updatePolygon()
         // Element type is Line?
         if (std::holds_alternative<Line>(element))
         {
-            bg::append(polygon.outer(), lines.back().first);
+            bg::append(polygon.outer(), std::get<Line>(element).first);
         }
         else if (std::holds_alternative<Arc>(element))
         {
-            bg::append(polygon.outer(), arcs.back().begin);
-            bg::append(polygon.outer(), arcs.back().center);
+            bg::append(polygon.outer(), std::get<Arc>(element).begin);
+            bg::append(polygon.outer(), std::get<Arc>(element).center);
         }
     }
     
