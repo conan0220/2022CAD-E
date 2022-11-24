@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-17 01:01:38
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-25 00:52:13
+ * @LastEditTime: 2022-11-25 01:00:49
  * @FilePath: /2022CAD-E/src/Base.cpp
  * @Description: 
  * 
@@ -16,13 +16,13 @@
 
 
 /**
- * Get polygon area, you must use updatePolygon() to push data into polygon first
+ * Get polygon area.
  * @return {double}
  */
 double Base::getArea()
 {
     Polygon polygon;    // closed path of points
-    double area;
+    double area = 0;
 
     for (auto element : lines_arcs)
     {
