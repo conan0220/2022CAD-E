@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-17 01:01:38
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-23 14:19:48
+ * @LastEditTime: 2022-11-25 00:52:13
  * @FilePath: /2022CAD-E/src/Base.cpp
  * @Description: 
  * 
@@ -21,35 +21,9 @@
  */
 double Base::getArea()
 {
-    double area = abs(bg::area(polygon));
-    for (Arc arc : arcs)
-    {
-        // posi[0] -> x, posi[1] -> y
-        std::vector<double> posi = arc.getPositionOnArc(arc.degree / 2);
+    Polygon polygon;    // closed path of points
+    double area;
 
-        // detect arc is outer or inner
-        if (bg::within(Point(posi[0], posi[1]), polygon))
-        {
-            // inner, minus arc area
-            area -= arc.getArea();
-        }
-        else
-        {
-            // outer, add arc area
-            area += arc.getArea();
-        }
-    }
-    return area;
-}
-
-
-
-/**
- * Add lines and arcs to polygon.
- * @return None.
- */
-void Base::updatePolygon()
-{
     for (auto element : lines_arcs)
     {
         // Element type is Line?
@@ -57,24 +31,31 @@ void Base::updatePolygon()
         {
             bg::append(polygon.outer(), std::get<Line>(element).first);
         }
+        // Element type is Arc?
         else if (std::holds_alternative<Arc>(element))
         {
-            bg::append(polygon.outer(), std::get<Arc>(element).begin);
-            bg::append(polygon.outer(), std::get<Arc>(element).center);
+            Arc arc = std::get<Arc>(element);
+
+            bg::append(polygon.outer(), arc.begin);
+            bg::append(polygon.outer(), arc.center);
+
+            // posi[0] -> x, posi[1] -> y
+            std::vector<double> posi = arc.getPositionOnArc(arc.degree / 2);
+
+            // detect arc is outer or inner
+            if (bg::within(Point(posi[0], posi[1]), polygon))
+            {
+                // inner, minus arc area
+                area -= arc.getArea();
+            }
+            else
+            {
+                // outer, add arc area
+                area += arc.getArea();
+            }
         }
     }
-    
+    area += abs(bg::area(polygon));
 
-
-
-    // if (type == "line")
-    // {
-    //     bg::append(polygon.outer(), lines.back().first);
-    // }
-    // else if (type == "arc")
-    // {
-    //     bg::append(polygon.outer(), arcs.back().begin);
-    //     bg::append(polygon.outer(), arcs.back().center);
-    // }
+    return area;
 }
-

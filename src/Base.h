@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-17 00:59:36
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-23 13:41:14
+ * @LastEditTime: 2022-11-25 00:52:47
  * @FilePath: /2022CAD-E/src/Base.h
  * @Description: 
  * 
@@ -24,12 +24,8 @@ public:
     ~Base() {}
     
     double getArea();
-    void updatePolygon();
     
-    std::vector<Line> lines;
-    std::vector<Arc> arcs;
-    std::vector<std::variant<Line, Arc>> lines_arcs;
-    Polygon polygon;    // closed path of points
+    std::vector<std::variant<Line, Arc>> lines_arcs;    // orderly lines and arcs
 
 private:
 };

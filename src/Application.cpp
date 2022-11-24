@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-21 20:06:05
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-23 13:49:06
+ * @LastEditTime: 2022-11-25 00:53:05
  * @FilePath: /2022CAD-E/src/Application.cpp
  * @Description: 
  * 
@@ -41,16 +41,11 @@ void Application::preProcessInputData()
             Line dataTemp = Line(Point(data[0], data[1]), Point(data[2], data[3]));
             if (targetComponent == "assembly")
             {
-                assembly.lines.push_back(dataTemp);
                 assembly.lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
-                //assembly.updatePolygon("line");
             }
             else if (targetComponent == "copper")
             {
-                coppers.back().lines.push_back(dataTemp);
                 coppers.back().lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
-
-                //coppers.back().updatePolygon("line");
             }
         }
         else if (text::isTargetInString(str, "arc"))
@@ -59,15 +54,11 @@ void Application::preProcessInputData()
             Arc dataTemp = Arc(Point(data[0], data[1]), Point(data[2], data[3]), Point(data[4], data[5]), clockWiseTemp);
             if (targetComponent == "assembly")
             {
-                assembly.arcs.push_back(dataTemp);
                 assembly.lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
-                //assembly.updatePolygon("arc");
             }
             else if (targetComponent == "copper")
             {
-                coppers.back().arcs.push_back(dataTemp);
                 coppers.back().lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
-                //coppers.back().updatePolygon("arc");
             }
         }
         else if (text::isTargetInString(str, "coppergap"))
@@ -92,8 +83,6 @@ void Application::preProcessInputData()
             Silkscreen::silkscreenLen = data[0];
         }
     }
-
-    assembly.updatePolygon();
 }
 
 void Application::processSilkscreen()
