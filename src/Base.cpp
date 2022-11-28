@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-17 01:01:38
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-25 01:00:49
+ * @LastEditTime: 2022-11-29 01:33:40
  * @FilePath: /2022CAD-E/src/Base.cpp
  * @Description: 
  * 
@@ -13,7 +13,6 @@
 
 #include "Math.h"
 #include <cmath>
-
 
 /**
  * Get polygon area.
@@ -43,7 +42,7 @@ double Base::getArea()
             std::vector<double> posi = arc.getPositionOnArc(arc.degree / 2);
 
             // detect arc is outer or inner
-            if (bg::within(Point(posi[0], posi[1]), polygon))
+            if (bg::within(Point2D(posi[0], posi[1]), polygon))
             {
                 // inner, minus arc area
                 area -= arc.getArea();
@@ -58,4 +57,39 @@ double Base::getArea()
     area += abs(bg::area(polygon));
 
     return area;
+}
+
+/**
+ * Displacement line.
+ * @return None.
+ */
+template <>
+void Base::moveBoundary<Line>(Line& data, double distance, Point2D directionVector)
+{
+    standardization(directionVector);
+
+
+}
+
+/**
+ * Displacement arc.
+ * @return None.
+ */
+template <>
+void Base::moveBoundary<Arc>(Arc& data, double distance, Point2D directionVector)
+{
+    std::cout << "hi";
+}
+
+
+/**
+ * Standardized parameter.
+ * @param p Two dimensional Point2D.
+ * @return None.
+ */
+void Base::standardization(Point2D& p)
+{
+    double r = sqrt(p.x() * p.x() + p.y() * p.y());
+    p.x(p.x() / r);
+    p.y(p.y() / r);
 }

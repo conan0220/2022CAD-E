@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-21 20:06:05
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-25 00:53:05
+ * @LastEditTime: 2022-11-29 02:16:10
  * @FilePath: /2022CAD-E/src/Application.cpp
  * @Description: 
  * 
@@ -21,6 +21,7 @@ Application::Application()
     preProcessInputData();
     processSilkscreen();
     std::cout << assembly.getArea() << std::endl;
+    Base::moveBoundary<Line>(std::get<Line>(assembly.lines_arcs[0]), 2, Point2D(3, 4));
 }
 
 /**
@@ -38,7 +39,7 @@ void Application::preProcessInputData()
         // identify the keyword of str
         if (text::isTargetInString(str, "line"))
         {
-            Line dataTemp = Line(Point(data[0], data[1]), Point(data[2], data[3]));
+            Line dataTemp = Line(Point2D(data[0], data[1]), Point2D(data[2], data[3]));
             if (targetComponent == "assembly")
             {
                 assembly.lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
@@ -51,7 +52,7 @@ void Application::preProcessInputData()
         else if (text::isTargetInString(str, "arc"))
         {
             bool clockWiseTemp = !text::isTargetInString(str, "CCW");
-            Arc dataTemp = Arc(Point(data[0], data[1]), Point(data[2], data[3]), Point(data[4], data[5]), clockWiseTemp);
+            Arc dataTemp = Arc(Point2D(data[0], data[1]), Point2D(data[2], data[3]), Point2D(data[4], data[5]), clockWiseTemp);
             if (targetComponent == "assembly")
             {
                 assembly.lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
@@ -92,10 +93,9 @@ void Application::processSilkscreen()
 
 /**
  * Put Assembly data into Silkscreens separately
- * @return 
+ * @return None
  */
 void Application::preProcessSilkscreenData()
 {
     
-
 }

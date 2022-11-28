@@ -20,7 +20,7 @@ namespace math
  * @param p3 Target point.
  * @return Return cos(p3_angle).
  */
-double cosineLaw(const Point& p1, const Point& p2, const Point& p3)
+double cosineLaw(const Point2D& p1, const Point2D& p2, const Point2D& p3)
 {
     double p1Len = bg::distance(p2, p3);
     double p2Len = bg::distance(p1, p3);

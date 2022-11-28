@@ -2,8 +2,8 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-11 22:04:28
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-10-19 03:25:17
- * @FilePath: \2022CAD-E\src\Geometry.cpp
+ * @LastEditTime: 2022-11-28 23:58:08
+ * @FilePath: /2022CAD-E/src/Geometry.cpp
  * @Description: This library deals exclusively with geometry.
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
@@ -25,7 +25,7 @@ namespace extra
  * @param p2 Second point.
  * @return If p1 identical to p2 return true, otherwise false.
  */
-bool equal(const Point& p1, const Point& p2)
+bool equal(const Point2D& p1, const Point2D& p2)
 {
     return p1.x() == p2.x() && p1.y() == p2.y();
 }
@@ -47,7 +47,7 @@ bool equal(const Line& l1, const Line& l2)
  * @param point
  * @return Return angle counterclockwise from the first quadrant.
  */
-double getAngle(const Point& center, const Point& point)
+double getAngle(const Point2D& center, const Point2D& point)
 {
     // it doesn't have angle
     if (equal(center, point))
@@ -79,7 +79,7 @@ double getAngle(const Point& center, const Point& point)
  * @param point
  * @return Return degree counterclockwise from the first quadrant.
  */
-double getDegree(const Point& center, const Point& point)
+double getDegree(const Point2D& center, const Point2D& point)
 {
     // it doesn't have angle
     if (equal(center, point))

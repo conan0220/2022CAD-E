@@ -15,6 +15,7 @@
 #include <variant>
 #include "Geometry.h"
 #include "Arc.h" 
+#include "Math.h"
 
 /// @brief Father node of Assembly, Copper, Silkscreen
 class Base
@@ -23,11 +24,15 @@ public:
     Base() {};
     ~Base() {}
     
-    double getArea();
+    template <typename T1>
+    static void moveBoundary(T1& data, double distance, Point2D directionVector);
     
+    double getArea();
+
     std::vector<std::variant<Line, Arc>> lines_arcs;    // orderly lines and arcs
 
 private:
+    static void standardization(Point2D& p);
 };
 
 #endif /* _BASE_H_ */

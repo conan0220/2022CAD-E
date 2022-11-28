@@ -2,8 +2,8 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-13 13:21:49
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-10-18 13:41:29
- * @FilePath: \2022CAD-E\src\Math.h
+ * @LastEditTime: 2022-11-29 02:08:13
+ * @FilePath: /2022CAD-E/src/Math.h
  * @Description: Bunch of mathematical logical.
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
@@ -12,6 +12,7 @@
 #define _MATH_
 
 #include <math.h>
+#include <iostream>
 
 #include "Geometry.h"
 
@@ -19,8 +20,8 @@
 
 namespace math
 {
-
-double cosineLaw(const Point& p1, const Point& p2, const Point& p3);
+    
+double cosineLaw(const Point2D& p1, const Point2D& p2, const Point2D& p3);
 
 }
 

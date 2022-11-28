@@ -8,15 +8,15 @@ class Arc
 {
 public:
     Arc() {};
-    Arc(Point begin, Point end, Point center, bool clockWise);
+    Arc(Point2D begin, Point2D end, Point2D center, bool clockWise);
     ~Arc() {};
 
     double getArea() const;
     std::vector<double> getPositionOnArc(double theta) const;
     
-    Point begin;
-    Point end;
-    Point center;
+    Point2D begin;
+    Point2D end;
+    Point2D center;
     bool clockWise;
     double radius;
     double beginDegree;

@@ -13,7 +13,7 @@
 #include <iostream>
 
 
-Arc::Arc(Point begin, Point end, Point center, bool clockWise)
+Arc::Arc(Point2D begin, Point2D end, Point2D center, bool clockWise)
     : begin(begin), end(end), center(center), clockWise(clockWise)
 {
     radius = bg::distance(begin, center);
