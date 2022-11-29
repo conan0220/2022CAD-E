@@ -35,6 +35,12 @@ double getDegree(const Point2D& center, const Point2D& point);
 
 double degreeToAngle(double degree);
 
+template <typename T1>
+void moveBoundary(T1& data, double distance, Point2D directionVector);
+
+void standardization(Point2D& p);
+
+
 }   // namespace boost::geometry::extra
 
 }   // namespace boost::geometry

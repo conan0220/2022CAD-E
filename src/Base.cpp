@@ -58,38 +58,3 @@ double Base::getArea()
 
     return area;
 }
-
-/**
- * Displacement line.
- * @return None.
- */
-template <>
-void Base::moveBoundary<Line>(Line& data, double distance, Point2D directionVector)
-{
-    standardization(directionVector);
-
-
-}
-
-/**
- * Displacement arc.
- * @return None.
- */
-template <>
-void Base::moveBoundary<Arc>(Arc& data, double distance, Point2D directionVector)
-{
-    std::cout << "hi";
-}
-
-
-/**
- * Standardized parameter.
- * @param p Two dimensional Point2D.
- * @return None.
- */
-void Base::standardization(Point2D& p)
-{
-    double r = sqrt(p.x() * p.x() + p.y() * p.y());
-    p.x(p.x() / r);
-    p.y(p.y() / r);
-}

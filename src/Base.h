@@ -24,15 +24,13 @@ public:
     Base() {};
     ~Base() {}
     
-    template <typename T1>
-    static void moveBoundary(T1& data, double distance, Point2D directionVector);
+    
     
     double getArea();
 
     std::vector<std::variant<Line, Arc>> lines_arcs;    // orderly lines and arcs
 
 private:
-    static void standardization(Point2D& p);
 };
 
 #endif /* _BASE_H_ */

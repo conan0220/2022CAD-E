@@ -21,7 +21,7 @@ Application::Application()
     preProcessInputData();
     processSilkscreen();
     std::cout << assembly.getArea() << std::endl;
-    Base::moveBoundary<Line>(std::get<Line>(assembly.lines_arcs[0]), 2, Point2D(3, 4));
+    bg::extra::moveBoundary<Line>(std::get<Line>(assembly.lines_arcs[0]), 2, Point2D(3, 4));
 }
 
 /**

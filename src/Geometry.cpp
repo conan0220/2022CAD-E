@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-11 22:04:28
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-28 23:58:08
+ * @LastEditTime: 2022-11-29 08:57:23
  * @FilePath: /2022CAD-E/src/Geometry.cpp
  * @Description: This library deals exclusively with geometry.
  * 
@@ -10,7 +10,7 @@
  */
 #include "Geometry.h"
 #include "Math.h"
-
+#include "Arc.h"
 
 namespace boost { namespace geometry
 {
@@ -32,8 +32,8 @@ bool equal(const Point2D& p1, const Point2D& p2)
 
 /**
  * Check if two lines identical.
- * @param p1 First line.
- * @param p2 Second line.
+ * @param l1 First line.
+ * @param l2 Second line.
  * @return If l1 identical to l2 return true, otherwise false.
  */
 bool equal(const Line& l1, const Line& l2)
@@ -121,6 +121,43 @@ double degreeToAngle(double degree)
 
     return degree;
 }
+
+
+/**
+ * Displacement line.
+ * @return None.
+ */
+template <>
+void moveBoundary<Line>(Line& data, double distance, Point2D directionVector)
+{
+    standardization(directionVector);
+
+
+}
+
+/**
+ * Displacement arc.
+ * @return None.
+ */
+template <>
+void moveBoundary<Arc>(Arc& data, double distance, Point2D directionVector)
+{
+    std::cout << "hi";
+}
+
+
+/**
+ * Standardized parameter.
+ * @param p Two dimensional Point2D.
+ * @return None.
+ */
+void standardization(Point2D& p)
+{
+    double r = sqrt(p.x() * p.x() + p.y() * p.y());
+    p.x(p.x() / r);
+    p.y(p.y() / r);
+}
+
 
 }   // namespace boost::geometry::extra
 
