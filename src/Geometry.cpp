@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-11 22:04:28
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-29 08:57:23
+ * @LastEditTime: 2022-12-01 01:04:01
  * @FilePath: /2022CAD-E/src/Geometry.cpp
  * @Description: This library deals exclusively with geometry.
  * 
@@ -81,29 +81,8 @@ double getAngle(const Point2D& center, const Point2D& point)
  */
 double getDegree(const Point2D& center, const Point2D& point)
 {
-    // it doesn't have angle
-    if (equal(center, point))
-        return -1;
-
-    // calculate the edges of triangle
-    double x = point.x() - center.x();
-    double y = point.y() - center.y();
-    double z = sqrt(x * x + y * y);
-
-    // angle we calculate
-    double angle = asin(math::abs(y) / z);
-
-    if (x >= 0 && y >= 0)             // first quadrant
-        angle = angle;
-    else if (x < 0 && y >= 0)         // second quadrant
-        angle = PI - angle;
-    else if (x < 0 && y < 0)         // third quadrant
-        angle += PI;
-    else if (x >= 0 && y < 0)        // forth quadrant
-        angle = 2 * PI - angle;
-
     // convert to theta
-    double degree = angle * 180 / PI;
+    double degree = getAngle(center, point) * 180 / PI;
 
     return degree;
 }
@@ -131,8 +110,12 @@ template <>
 void moveBoundary<Line>(Line& data, double distance, Point2D directionVector)
 {
     standardization(directionVector);
-
-
+    directionVector.x(directionVector.x() * distance);
+    directionVector.y(directionVector.y() * distance);
+    data.first.x(data.first.x() + directionVector.x());
+    data.first.y(data.first.y() + directionVector.y());
+    data.second.x(data.second.x() + directionVector.x());
+    data.second.y(data.second.y() + directionVector.y());
 }
 
 /**

@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-11 22:04:28
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-28 23:16:32
+ * @LastEditTime: 2022-12-01 00:57:31
  * @FilePath: /2022CAD-E/src/Geometry.h
  * @Description: This library deals exclusively with geometry.
  * 
@@ -18,6 +18,7 @@ typedef bg::model::polygon<Point2D> Polygon;          // Points
 
 #ifndef _GEOMETRY_H_
 #define _GEOMETRY_H_
+
 
 namespace boost { namespace geometry
 {

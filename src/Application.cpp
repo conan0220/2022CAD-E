@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-21 20:06:05
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-29 02:16:10
+ * @LastEditTime: 2022-12-01 01:12:55
  * @FilePath: /2022CAD-E/src/Application.cpp
  * @Description: 
  * 
@@ -20,8 +20,10 @@ Application::Application()
     // read data and set in specific component
     preProcessInputData();
     processSilkscreen();
-    std::cout << assembly.getArea() << std::endl;
-    bg::extra::moveBoundary<Line>(std::get<Line>(assembly.lines_arcs[0]), 2, Point2D(3, 4));
+    Line l1 = Line(Point2D(0, 1), Point2D(1, 0));
+    bg::extra::moveBoundary<Line>(l1, 5, Point2D(5, 5));
+    std::cout << l1.first.x() << " " << l1.first.y() << std::endl;
+    std::cout << l1.second.x() << " " << l1.second.y() << std::endl;
 }
 
 /**
