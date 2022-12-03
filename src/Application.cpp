@@ -2,8 +2,8 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-21 20:06:05
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-01 01:12:55
- * @FilePath: /2022CAD-E/src/Application.cpp
+ * @LastEditTime: 2022-12-02 22:05:37
+ * @FilePath: \2022CAD-E\src\Application.cpp
  * @Description: 
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
@@ -100,4 +100,35 @@ void Application::processSilkscreen()
 void Application::preProcessSilkscreenData()
 {
     
+}
+
+/**
+ * Output silkscreens to txt file.
+ * @param filePath File path.
+ * @return None.
+ */
+void Application::outputToTxt(std::string filePath)
+{
+    std::vector<std::string> text;
+    for (const Silkscreen& silkscreen : silkscreens)
+    {
+        text.push_back("silkscreen");
+        
+        for (const std::variant<Line, Arc>& element : silkscreen.lines_arcs)
+        {
+            // Element type is Line?
+            if (std::holds_alternative<Line>(element))
+            {
+                Line line = std::get<Line>(element);
+                text.push_back("line," + std::to_string(line.first.x()) + "," + std::to_string(line.first.y()) + "," + std::to_string(line.second.x()) + "," + std::to_string(line.second.y()));
+            }
+            // Element type is Arc?
+            else if (std::holds_alternative<Arc>(element))
+            {
+                Arc arc = std::get<Arc>(element);
+                text.push_back("Arc," + std::to_string(arc.begin.x()) + "," + std::to_string(arc.begin.y()) + "," + std::to_string(arc.end.x()) + "," + std::to_string(arc.end.y()) + "," + std::to_string(arc.center.x()) + "," + std::to_string(arc.center.y()) + "," + (arc.clockWise ? "CW" : "CCW"));
+            }
+        }
+            
+    }
 }

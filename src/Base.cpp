@@ -2,8 +2,8 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-17 01:01:38
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-29 01:33:40
- * @FilePath: /2022CAD-E/src/Base.cpp
+ * @LastEditTime: 2022-12-02 17:42:15
+ * @FilePath: \2022CAD-E\src\Base.cpp
  * @Description: 
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
@@ -23,7 +23,7 @@ double Base::getArea()
     Polygon polygon;    // closed path of points
     double area = 0;
 
-    for (auto element : lines_arcs)
+    for (const std::variant<Line, Arc>& element : lines_arcs)
     {
         // Element type is Line?
         if (std::holds_alternative<Line>(element))

@@ -2,8 +2,8 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-10 18:32:35
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-11-11 16:38:44
- * @FilePath: /2022CAD-E/src/Text.h
+ * @LastEditTime: 2022-12-02 20:41:31
+ * @FilePath: \2022CAD-E\src\Text.h
  * @Description: This library deals with text.
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
@@ -17,13 +17,15 @@
 
 namespace text
 {
+bool isNumeric(const std::string& str);
 
-bool isNumber(char ch);
 bool isTargetInString(std::string str, std::string target);
 
 std::vector<std::string> loadFile(std::string filePath = "");
 std::vector<double> getDataFromString(std::string str);
 std::vector<double> getDataFromText(std::vector<std::string> text, int start = 0);
+
+void writeFile(const std::vector<std::string>& text, std::string filePath);
 
 }   // namespace text
 #endif /* _TEXT_H_ */

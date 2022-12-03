@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-10 18:32:35
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-10-17 00:51:09
+ * @LastEditTime: 2022-12-03 11:04:41
  * @FilePath: \2022CAD-E\src\Text.cpp
  * @Description: This library deals with text.
  * 
@@ -10,18 +10,17 @@
  */
 #include "Text.h"
 #include <string>
+#include <regex>
 
 namespace text
 {
 
-/**
- * Identify whether ch is number.
- * @param ch
- * @return If ch is number return true, otherwise false.
- */
-bool isNumber(char ch)
+bool isNumeric(const std::string& str)
 {
-	return 48 <= static_cast<int>(ch) && static_cast<int>(ch) <= 57;
+	if (std::count(str.begin(), str.end(),'.') > 1 || (str.size() == 1 && str == "."))
+		return false;
+	else
+    	return std::regex_match(str, std::regex("[(-|+)|][0-9|.]+"));
 }
 
 /**
@@ -60,6 +59,23 @@ std::vector<std::string> loadFile(std::string filePath)
  */
 std::vector<double> getDataFromString(std::string str)
 {
+	// std::vector<double> datas;
+	// std::string data_str;
+	// for (const char& ch : str)
+	// {	// ab.7-7.3
+	// 	data_str += ch;
+	// 	if (data_str.size() == 1 && !isNumeric(data_str) && data_str[0] != '.')
+	// 	{
+	// 		data_str.pop_back();
+	// 	}
+	// 	else if (data_str.size() > 1 && !isNumeric(data_str))
+	// 	{
+	// 		data_str.pop_back();
+	// 		datas.push_back(std::stod(data_str));
+	// 		data_str.clear();
+	// 	}
+	// }
+
 	std::vector<double> ans;
 	std::string temp = "";
 	int i = -1;
@@ -73,7 +89,7 @@ std::vector<double> getDataFromString(std::string str)
 		// 小數點前的判斷
 		while (true)
 		{
-			if (isNumber(str[i]))
+			if (std::isdigit(str[i]))
 				temp += str[i];
 			else if (str[i] == '.')
 			{
@@ -106,7 +122,7 @@ std::vector<double> getDataFromString(std::string str)
 		while (true)
 		{
 			i++;
-			if (isNumber(str[i]))
+			if (std::isdigit(str[i]))
 				temp += str[i];
 			else
 			{
@@ -140,6 +156,26 @@ std::vector<double> getDataFromText(std::vector<std::string> text, int start)
 		ans.insert(ans.end(), temp.begin(), temp.end());
 	}
 	return ans;
+}
+
+/**
+ * Write text to the file.
+ * @param text A text.
+ * @param filePath File path.
+ * @return None
+ */
+void writeFile(const std::vector<std::string>& text, std::string filePath)
+{
+	std::ofstream ofs;
+
+	ofs.open(filePath);
+
+	for (const std::string& str : text)
+	{
+		ofs << str << std::endl;
+	}
+
+	ofs.close();
 }
 
 }	// namespace text
