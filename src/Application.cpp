@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-21 20:06:05
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-11 00:38:06
+ * @LastEditTime: 2022-12-11 12:49:53
  * @FilePath: /2022CAD-E/src/Application.cpp
  * @Description: 
  * 
@@ -24,6 +24,8 @@ Application::Application()
     bg::extra::moveBoundary<Line>(l1, 5, Point2D(5, 5));
     std::cout << l1.first.x() << " " << l1.first.y() << std::endl;
     std::cout << l1.second.x() << " " << l1.second.y() << std::endl;
+    std::cout << std::get<Arc>(coppers[0].lines_arcs[1]).getPositionOnArc(0, 0)[0] << std::endl;
+    std::cout << assembly.getArea() << std::endl;
 }
 
 /**

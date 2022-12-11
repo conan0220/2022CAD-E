@@ -2,8 +2,8 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-17 01:01:38
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-02 17:42:15
- * @FilePath: \2022CAD-E\src\Base.cpp
+ * @LastEditTime: 2022-12-11 12:42:23
+ * @FilePath: /2022CAD-E/src/Base.cpp
  * @Description: 
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
@@ -39,7 +39,7 @@ double Base::getArea()
             bg::append(polygon.outer(), arc.center);
 
             // posi[0] -> x, posi[1] -> y
-            std::vector<double> posi = arc.getPositionOnArc(arc.degree / 2);
+            std::vector<double> posi = arc.getPositionOnArc(arc.angle / 2);
 
             // detect arc is outer or inner
             if (bg::within(Point2D(posi[0], posi[1]), polygon))

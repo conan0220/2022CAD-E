@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-10 18:32:35
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-11 00:29:01
+ * @LastEditTime: 2022-12-11 10:57:32
  * @FilePath: /2022CAD-E/src/Text.cpp
  * @Description: This library deals with text.
  * 
@@ -17,10 +17,7 @@ namespace text
 
 bool isNumeric(const std::string& str)
 {
-	if (std::count(str.begin(), str.end(),'.') > 1 || (str.size() == 1 && str == "."))
-		return false;
-	else
-    	return std::regex_match(str, std::regex("[(-|+)|][0-9|.]+"));
+   	return std::regex_match(str, std::regex("(-?\\d+\\.?\\d*)"));
 }
 
 /**

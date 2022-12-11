@@ -2,8 +2,8 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-11 22:04:28
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-02 16:13:24
- * @FilePath: \2022CAD-E\src\Geometry.cpp
+ * @LastEditTime: 2022-12-11 12:44:56
+ * @FilePath: /2022CAD-E/src/Geometry.cpp
  * @Description: This library deals exclusively with geometry.
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
@@ -41,24 +41,16 @@ bool equal(const Line& l1, const Line& l2)
     return (equal(l1.first, l2.first) && equal(l1.second, l2.second)) || (equal(l1.first, l2.second) && equal(l1.second, l2.first));
 }
 
+
 /**
- * Get the angle counterclockwise from the first quadrant. For example, center = (0, 0), point = (-1, 0), return 3.14159...
- * @param center 
- * @param point
+ * Helper function to calculate the angle counterclockwise from the first quadrant.
+ * @param x  X coordinate of the point.
+ * @param y  Y coordinate of the point.
  * @return Return angle counterclockwise from the first quadrant.
  */
-double getAngle(const Point2D& center, const Point2D& point)
+double getAngle(double x, double y)
 {
-    // it doesn't have angle
-    if (equal(center, point))
-        return -1;
-
-    // calculate the edges of triangle
-    double x = point.x() - center.x();
-    double y = point.y() - center.y();
     double z = sqrt(x * x + y * y);
-
-    // angle we calculate
     double angle = asin(math::abs(y) / z);
 
     if (x >= 0 && y >= 0)             // first quadrant
@@ -74,21 +66,33 @@ double getAngle(const Point2D& center, const Point2D& point)
 }
 
 /**
- * Get the degree counterclockwise from the first quadrant. For example, center = (0, 0), point = (-1, 0), return 180.
- * @param center
+ * Get the angle or degree counterclockwise from the first quadrant. For example, center = (0, 0), point = (-1, 0), return 3.14159... or 180.
+ * @param center 
  * @param point
- * @return Return degree counterclockwise from the first quadrant.
+ * @param mode  Mode of the output angle, 0 for radian (default), 1 for degree.
+ * @return Return angle or degree counterclockwise from the first quadrant.
  */
-double getDegree(const Point2D& center, const Point2D& point)
+double getAngle(const Point2D& center, const Point2D& point, int mode)
 {
-    // convert to theta
-    double degree = getAngle(center, point) * 180 / PI;
+    // it doesn't have angle
+    if (equal(center, point))
+        return -1;
 
-    return degree;
+    // calculate the edges of triangle
+    double x = point.x() - center.x();
+    double y = point.y() - center.y();
+
+    // return angle in radian or degree
+    double angle = getAngle(x, y);
+    if (mode == 0)
+        return angle;
+    else
+        return angle * 180 / PI;
 }
 
+
 // Theta to angle. If over 360, function will convert it to 360 below, then transform to angle. Ex. 540 -> 180 -> 3.14159.
-double degreeToAngle(double degree)
+double degreeToRadian(double degree)
 {
     degree = std::fmod(degree, 360);
 
@@ -110,12 +114,13 @@ template <>
 void moveBoundary<Line>(Line& data, double distance, Point2D directionVector)
 {
     standardization(directionVector);
-    directionVector.x(directionVector.x() * distance);
-    directionVector.y(directionVector.y() * distance);
-    data.first.x(data.first.x() + directionVector.x());
-    data.first.y(data.first.y() + directionVector.y());
-    data.second.x(data.second.x() + directionVector.x());
-    data.second.y(data.second.y() + directionVector.y());
+    double dx = directionVector.x() * distance;
+    double dy = directionVector.y() * distance;
+
+    data.first.x(data.first.x() + dx);
+    data.first.y(data.first.y() + dy);
+    data.second.x(data.second.x() + dx);
+    data.second.y(data.second.y() + dy);
 }
 
 /**
