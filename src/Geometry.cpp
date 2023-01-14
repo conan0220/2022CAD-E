@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-11 22:04:28
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-11 12:44:56
+ * @LastEditTime: 2022-12-14 23:08:10
  * @FilePath: /2022CAD-E/src/Geometry.cpp
  * @Description: This library deals exclusively with geometry.
  * 
@@ -46,9 +46,10 @@ bool equal(const Line& l1, const Line& l2)
  * Helper function to calculate the angle counterclockwise from the first quadrant.
  * @param x  X coordinate of the point.
  * @param y  Y coordinate of the point.
+ * @param mode  Mode of the output angle, 0 for radian (default), 1 for degree.
  * @return Return angle counterclockwise from the first quadrant.
  */
-double getAngle(double x, double y)
+double getAngle(const double& x, const double& y, const int& mode)
 {
     double z = sqrt(x * x + y * y);
     double angle = asin(math::abs(y) / z);
@@ -62,17 +63,20 @@ double getAngle(double x, double y)
     else if (x >= 0 && y < 0)        // forth quadrant
         angle = 2 * PI - angle;
 
-    return angle;
+    if (mode == 0)
+        return angle;
+    else
+        return angle * 180 / PI;
 }
 
 /**
  * Get the angle or degree counterclockwise from the first quadrant. For example, center = (0, 0), point = (-1, 0), return 3.14159... or 180.
- * @param center 
- * @param point
+ * @param center A point representing the center of a circle.
+ * @param point A point on the circumference of the circle.
  * @param mode  Mode of the output angle, 0 for radian (default), 1 for degree.
  * @return Return angle or degree counterclockwise from the first quadrant.
  */
-double getAngle(const Point2D& center, const Point2D& point, int mode)
+double getAngle(const Point2D& center, const Point2D& point, const int& mode)
 {
     // it doesn't have angle
     if (equal(center, point))
@@ -83,35 +87,68 @@ double getAngle(const Point2D& center, const Point2D& point, int mode)
     double y = point.y() - center.y();
 
     // return angle in radian or degree
-    double angle = getAngle(x, y);
-    if (mode == 0)
-        return angle;
-    else
-        return angle * 180 / PI;
+    return getAngle(x, y, mode);
 }
 
-
-// Theta to angle. If over 360, function will convert it to 360 below, then transform to angle. Ex. 540 -> 180 -> 3.14159.
-double degreeToRadian(double degree)
+/**
+ * Convert a degree value to a radian value.
+ * @param degree The degree value to convert.
+ * @return The radian value. [0, 2 * PI]
+ */
+double degreeToRadian(const double& degree)
 {
-    degree = std::fmod(degree, 360);
+    return degree * PI / 180;
+}
 
-    // ex. -30 -> 330
-    if (degree < 0)
-        degree += 360;
-    
-    degree = degree * PI / 180;
+/**
+ * Convert a radian value to a degree value.
+ * @param radian The radian value to convert.
+ * @return The radian value. [0, 360]
+ */
+double radianToDegree(const double& radian)
+{
+    return radian * 180 / PI;
+}
 
-    return degree;
+/**
+ * Normalizes an angle to a value between 0 and 2*PI in radians or 0 and 360 in degrees, depending on the mode.
+ * @param angle The angle to normalize.
+ * @param mode Specifies whether the angle is in radians (mode=0) (default) or degrees (mode=1).
+ * @return The normalized angle.
+ */
+double nomalizeAngle(const double& angle, const int& mode)
+{
+    if (mode == 0)
+    {
+        double radian = std::fmod(angle, 2 * PI);
+        if (radian == 0 && angle >= 2 * PI)
+            return 2 * PI;
+        if (radian < 0)
+            radian += 2 * PI;
+        return radian;
+    }
+    else if (mode == 1)
+    {
+        double degree = std::fmod(angle, 360);
+        if (degree == 0 && angle >= 360)
+            return 360;
+        if (degree < 0)
+            degree += 360;
+        return degree;
+    }
+    return angle;
 }
 
 
 /**
- * Displacement line.
+ * Move a boundary line by a given distance in a given direction.
+ * @param data The boundary line to move.
+ * @param distance The distance to move the line.
+ * @param directionVector The direction in which to move the line.
  * @return None.
  */
 template <>
-void moveBoundary<Line>(Line& data, double distance, Point2D directionVector)
+void moveBoundary<Line>(Line& data, const double& distance, Point2D directionVector)
 {
     standardization(directionVector);
     double dx = directionVector.x() * distance;
@@ -128,7 +165,7 @@ void moveBoundary<Line>(Line& data, double distance, Point2D directionVector)
  * @return None.
  */
 template <>
-void moveBoundary<Arc>(Arc& data, double distance, Point2D directionVector)
+void moveBoundary<Arc>(Arc& data, const double& distance, Point2D directionVector)
 {
     std::cout << "hi";
 }

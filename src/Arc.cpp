@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-21 02:15:28
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-11 12:43:51
+ * @LastEditTime: 2023-01-14 09:49:59
  * @FilePath: /2022CAD-E/src/Arc.cpp
  * @Description: 
  * 
@@ -29,23 +29,13 @@ double Arc::getArea() const
 
 /**
  * Get the coordinate of the point on the arc.
- * @param angle The angle of the point from the starting point of the arc, measured in radians. If the angle is outside of the range [0, degree], it will be converted to the range [0, degree].
+ * @param angle The angle of the point from the starting point of the arc, measured in radians and the clockwise of object. If the angle is outside of the range [0, degree], it will be converted to the range [0, degree].
  * @param mode  The mode of the input angle, 0 for radian (default), 1 for degree.
  * @return Return a vector which contains the coordinate of position on arc. First element is x, second is y.
- *
- * Example:
- *   getPositionOnArc(0.5 * PI, 1, true)  ->  (0.5, 0)
- *   getPositionOnArc(0.5 * PI, 1, false) ->  (-0.5, 0)
- *
- * Math:
- *   (x, y) = (center.x + radius * cos(angle + beginDegree), center.y + radius * sin(angle + beginDegree))
  */
 std::vector<double> Arc::getPositionOnArc(double angle_t, int mode) const
 {
-    // convert angle to positive and in range
-    angle_t = abs(angle_t);
-    if (angle_t > angle)
-        angle_t = angle;
+    angle_t = bg::extra::nomalizeAngle(angle_t, mode);
 
     // convert degree to radian
     if (mode == 1)
@@ -53,9 +43,9 @@ std::vector<double> Arc::getPositionOnArc(double angle_t, int mode) const
 
     // adjust angle by the direction of the coordinate axis
     if (clockWise)
-        angle_t = beginAngle + angle;
+        angle_t = beginAngle - angle_t;
     else
-        angle_t = beginAngle - angle;
+        angle_t = beginAngle + angle_t;
 
     // calculate the coordinates
     std::vector<double> position;

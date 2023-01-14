@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-10 18:32:35
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-11 10:57:32
+ * @LastEditTime: 2022-12-14 23:06:40
  * @FilePath: /2022CAD-E/src/Text.cpp
  * @Description: This library deals with text.
  * 
@@ -114,3 +114,4 @@ void writeFile(const std::vector<std::string>& text, std::string filePath)
 }
 
 }	// namespace text
+

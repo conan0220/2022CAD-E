@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-11 22:04:28
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-11 12:45:03
+ * @LastEditTime: 2022-12-14 23:21:22
  * @FilePath: /2022CAD-E/src/Geometry.h
  * @Description: This library deals exclusively with geometry.
  * 
@@ -30,14 +30,18 @@ bool equal(const Point2D& p1, const Point2D& p2);
 
 bool equal(const Line& l1, const Line& l2);
 
-double getAngle(double x, double y);
+double getAngle(const double& x, const double& y, const int& mode = 0);
 
-double getAngle(const Point2D& center, const Point2D& point, int mode = 0);
+double getAngle(const Point2D& center, const Point2D& point, const int& mode = 0);
 
-double degreeToRadian(double degree);
+double degreeToRadian(const double& degree);
+
+double radianToDegree(const double& radian);
+
+double nomalizeAngle(const double& angle, const int& mode = 0);
 
 template <typename T1>
-void moveBoundary(T1& data, double distance, Point2D directionVector) {}
+void moveBoundary(T1& data, const double& distance, Point2D directionVector) {}
 
 void standardization(Point2D& p);
 
