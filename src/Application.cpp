@@ -1,13 +1,3 @@
-/*
- * @Author: conan0220 conanhuang8382@gmail.com
- * @Date: 2022-10-21 20:06:05
- * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-11 12:49:53
- * @FilePath: /2022CAD-E/src/Application.cpp
- * @Description: 
- * 
- * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
- */
 #include "Application.h"
 #include "Text.h"
 #include "Assembly.h"

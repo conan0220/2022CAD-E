@@ -1,13 +1,3 @@
-/*
- * @Author: conan0220 conanhuang8382@gmail.com
- * @Date: 2022-10-17 00:59:36
- * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-02 17:11:25
- * @FilePath: \2022CAD-E\src\Base.h
- * @Description: 
- * 
- * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
- */
 #ifndef _BASE_H_
 #define _BASE_H_
 

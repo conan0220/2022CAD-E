@@ -1,22 +1,3 @@
-/*
- * @Author: conan0220 conanhuang8382@gmail.com
- * @Date: 2022-10-10 18:32:35
- * @LastEditors: conan0220 conanhuang8382@gmail.com
-<<<<<<< HEAD
- * @LastEditTime: 2022-12-14 23:06:40
-=======
-<<<<<<< HEAD
- * @LastEditTime: 2022-12-08 19:22:15
- * @FilePath: \2022CAD-E\src\Text.cpp
-=======
- * @LastEditTime: 2022-12-11 00:29:01
->>>>>>> develop
- * @FilePath: /2022CAD-E/src/Text.cpp
->>>>>>> 6b7f8edbb0fdfc7b518531b720b7edd381d5ce0d
- * @Description: This library deals with text.
- * 
- * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
- */
 #include "Text.h"
 #include <string>
 #include <regex>
@@ -31,7 +12,10 @@ namespace text
  */
 bool isNumeric(const std::string& str)
 {
-   	return std::regex_match(str, std::regex("(-?\\d+\\.?\\d*)"));
+	if (std::count(str.begin(), str.end(),'.') > 1 || (str.size() == 1 && str == "."))
+		return false;
+	else
+    	return std::regex_match(str, std::regex("[(-|+)|][0-9|.]+"));
 }
 
 /**
@@ -128,4 +112,3 @@ void writeFile(const std::vector<std::string>& text, std::string filePath)
 }
 
 }	// namespace text
-

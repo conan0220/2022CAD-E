@@ -1,13 +1,3 @@
-/*
- * @Author: conan0220 conanhuang8382@gmail.com
- * @Date: 2022-10-11 22:04:28
- * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-14 23:08:10
- * @FilePath: /2022CAD-E/src/Geometry.cpp
- * @Description: This library deals exclusively with geometry.
- * 
- * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
- */
 #include "Geometry.h"
 #include "Math.h"
 #include "Arc.h"
@@ -93,7 +83,7 @@ double getAngle(const Point2D& center, const Point2D& point, const int& mode)
 /**
  * Convert a degree value to a radian value.
  * @param degree The degree value to convert.
- * @return The radian value. [0, 2 * PI]
+ * @return The radian value.
  */
 double degreeToRadian(const double& degree)
 {
@@ -103,7 +93,7 @@ double degreeToRadian(const double& degree)
 /**
  * Convert a radian value to a degree value.
  * @param radian The radian value to convert.
- * @return The radian value. [0, 360]
+ * @return The radian value.
  */
 double radianToDegree(const double& radian)
 {

@@ -1,17 +1,8 @@
 /*
- * @Author: conan0220 conanhuang8382@gmail.com
- * @Date: 2022-10-21 02:15:28
- * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-11 12:15:29
- * @FilePath: /2022CAD-E/src/Arc.h
- * @Description: Angle -> radian (default). 
- * 
- * Example:
- *  radian -> 3.14
- *  degree -> 180
- * 
- * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
- */
+* For example:
+*   radian -> 3.14
+*   degree -> 180
+*/
 #ifndef _ARC_H_
 #define _ARC_H_
 

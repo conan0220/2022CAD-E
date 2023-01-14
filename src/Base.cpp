@@ -1,13 +1,3 @@
-/*
- * @Author: conan0220 conanhuang8382@gmail.com
- * @Date: 2022-10-17 01:01:38
- * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-11 12:42:23
- * @FilePath: /2022CAD-E/src/Base.cpp
- * @Description: 
- * 
- * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
- */
 #include "Base.h"
 #include "Geometry.h"
 

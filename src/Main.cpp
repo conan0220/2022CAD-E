@@ -1,14 +1,4 @@
 /*
- * @Author: conan0220 conanhuang8382@gmail.com
- * @Date: 2022-10-10 18:32:35
- * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-14 23:39:28
- * @FilePath: /2022CAD-E/src/Main.cpp
- * @Description: 2022 ICCAD Problem E
- * 
- * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
- */
-/*
  *                                                     __----~~~~~~~~~~~------___
  *                                    .  .   ~~//====......          __--~ ~~
  *                    -.            \_|//     |||\\  ~~~~~~::::... /~
@@ -42,12 +32,6 @@
 
 #include "Application.h"
 
-// int main()
-// {
-//     std::cout << bg::extra::getAngle(1, 1, 1) << std::endl;    // 45
-//     std::cout << bg::extra::getAngle(Point2D(1, 1), Point2D(1, 0), 0) << std::endl; // 4.71
-//     std::cout << bg::extra::getAngle(Point2D(1, 1), Point2D(1, 0), 1) << std::endl; // 270   
-// }
 int main()
 {
     // Create an Arc object

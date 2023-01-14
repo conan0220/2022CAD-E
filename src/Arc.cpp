@@ -1,13 +1,3 @@
-/*
- * @Author: conan0220 conanhuang8382@gmail.com
- * @Date: 2022-10-21 02:15:28
- * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2023-01-14 09:49:59
- * @FilePath: /2022CAD-E/src/Arc.cpp
- * @Description: 
- * 
- * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
- */
 #include "Arc.h"
 #include "Math.h"
 #include <iostream>
