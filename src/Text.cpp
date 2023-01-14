@@ -2,7 +2,7 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-10 18:32:35
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-03 11:04:41
+ * @LastEditTime: 2022-12-08 19:22:15
  * @FilePath: \2022CAD-E\src\Text.cpp
  * @Description: This library deals with text.
  * 
@@ -15,6 +15,11 @@
 namespace text
 {
 
+/**
+ * For example "-1.4" -> true, ".34" -> true, "abc" -> false, "-3.33-" -> false, "3.3.3" -> false, "." -> false.
+ * @param str std::string type.
+ * @return Is numeric or not?
+ */
 bool isNumeric(const std::string& str)
 {
 	if (std::count(str.begin(), str.end(),'.') > 1 || (str.size() == 1 && str == "."))
