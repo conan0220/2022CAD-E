@@ -2,8 +2,13 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-10 18:32:35
  * @LastEditors: conan0220 conanhuang8382@gmail.com
+<<<<<<< HEAD
  * @LastEditTime: 2022-12-08 19:22:15
  * @FilePath: \2022CAD-E\src\Text.cpp
+=======
+ * @LastEditTime: 2022-12-11 00:29:01
+ * @FilePath: /2022CAD-E/src/Text.cpp
+>>>>>>> 6b7f8edbb0fdfc7b518531b720b7edd381d5ce0d
  * @Description: This library deals with text.
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
@@ -58,91 +63,29 @@ std::vector<std::string> loadFile(std::string filePath)
 }
 
 /**
- * Get data(number) in string.
- * @param str
- * @return Return the data in str which type is vector<double>. The size of vector is the number of data in str.
+ * Extracts numeric values from a string and returns them as a vector.
+ *
+ * @param input The string to extract values from.
+ * @return A vector containing all extracted numeric values.
  */
-std::vector<double> getDataFromString(std::string str)
+
+std::vector<double> extractNumeric(const std::string& input) 
 {
-	// std::vector<double> datas;
-	// std::string data_str;
-	// for (const char& ch : str)
-	// {	// ab.7-7.3
-	// 	data_str += ch;
-	// 	if (data_str.size() == 1 && !isNumeric(data_str) && data_str[0] != '.')
-	// 	{
-	// 		data_str.pop_back();
-	// 	}
-	// 	else if (data_str.size() > 1 && !isNumeric(data_str))
-	// 	{
-	// 		data_str.pop_back();
-	// 		datas.push_back(std::stod(data_str));
-	// 		data_str.clear();
-	// 	}
-	// }
+  std::vector<double> values;
+  std::regex pattern("(-?\\d+\\.?\\d*)");
+  std::smatch matches;
 
-	std::vector<double> ans;
-	std::string temp = "";
-	int i = -1;
-	while (++i < str.size())
-	{
-		if (str[i] == '-')
-		{
-			temp += '-';
-			i++;
-		}
-		// 小數點前的判斷
-		while (true)
-		{
-			if (std::isdigit(str[i]))
-				temp += str[i];
-			else if (str[i] == '.')
-			{
-				temp += str[i];
-				break;
-			}
-			else
-			{
-				if (temp == "-")
-				{
-					temp.clear();
-					break;
-				}
-				else if (!temp.empty())
-				{
-					// std::cerr << std::endl << temp;
-					ans.push_back(std::stof(temp));
+  // 查找字串中所有符合的值
+  std::string::const_iterator search_start(input.cbegin());
+  while (std::regex_search(search_start, input.cend(), matches, pattern)) 
+  {
+    // 將匹配到的結果轉換為 double 並存入 vector
+    values.push_back(std::stod(matches[1].str()));
+    // 設定下一次搜尋的位置
+    search_start = matches.suffix().first;
+  }
 
-					temp.clear();
-					break;
-				}
-				else
-					break;
-			}
-			i++;
-		}
-		if (temp.empty())
-			continue;
-		// 小數點後的判斷
-		while (true)
-		{
-			i++;
-			if (std::isdigit(str[i]))
-				temp += str[i];
-			else
-			{
-				if (temp == ".")
-				{
-					temp.clear();
-					break;
-				}
-				ans.push_back(std::stof(temp));
-				temp.clear();
-				break;
-			}
-		}
-	}
-	return ans;
+  return values;
 }
 
 /**
@@ -157,7 +100,7 @@ std::vector<double> getDataFromText(std::vector<std::string> text, int start)
 	std::vector<double> temp;
 	for (int i = start; i < text.size(); i++)
 	{
-		temp = getDataFromString(text[i]);
+		temp = extractNumeric(text[i]);
 		ans.insert(ans.end(), temp.begin(), temp.end());
 	}
 	return ans;

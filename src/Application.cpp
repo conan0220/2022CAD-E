@@ -2,8 +2,8 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-21 20:06:05
  * @LastEditors: conan0220 conanhuang8382@gmail.com
- * @LastEditTime: 2022-12-02 22:05:37
- * @FilePath: \2022CAD-E\src\Application.cpp
+ * @LastEditTime: 2022-12-11 00:38:06
+ * @FilePath: /2022CAD-E/src/Application.cpp
  * @Description: 
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
@@ -36,7 +36,7 @@ void Application::preProcessInputData()
     std::string targetComponent = "";  // current component we focus
     for (std::string str : text)    // line by line
     {
-        std::vector<double> data = text::getDataFromString(str);      //  numbers in the string
+        std::vector<double> data = text::extractNumeric(str);      //  numbers in the string
 
         // identify the keyword of str
         if (text::isTargetInString(str, "line"))
