@@ -2,8 +2,17 @@
  * @Author: conan0220 conanhuang8382@gmail.com
  * @Date: 2022-10-10 18:32:35
  * @LastEditors: conan0220 conanhuang8382@gmail.com
+<<<<<<< HEAD
  * @LastEditTime: 2022-12-14 23:06:40
+=======
+<<<<<<< HEAD
+ * @LastEditTime: 2022-12-08 19:22:15
+ * @FilePath: \2022CAD-E\src\Text.cpp
+=======
+ * @LastEditTime: 2022-12-11 00:29:01
+>>>>>>> develop
  * @FilePath: /2022CAD-E/src/Text.cpp
+>>>>>>> 6b7f8edbb0fdfc7b518531b720b7edd381d5ce0d
  * @Description: This library deals with text.
  * 
  * Copyright (c) 2022 by conan0220 conanhuang8382@gmail.com, All Rights Reserved. 
@@ -15,6 +24,11 @@
 namespace text
 {
 
+/**
+ * For example "-1.4" -> true, ".34" -> true, "abc" -> false, "-3.33-" -> false, "3.3.3" -> false, "." -> false.
+ * @param str std::string type.
+ * @return Is numeric or not?
+ */
 bool isNumeric(const std::string& str)
 {
    	return std::regex_match(str, std::regex("(-?\\d+\\.?\\d*)"));
