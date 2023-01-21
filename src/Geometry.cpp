@@ -1,6 +1,5 @@
 #include "Geometry.h"
-#include "Math.h"
-#include "Arc.h"
+
 
 namespace boost { namespace geometry
 {
@@ -131,37 +130,6 @@ double nomalizeAngle(const double& angle, const int& mode)
 
 
 /**
- * Move a boundary line by a given distance in a given direction.
- * @param data The boundary line to move.
- * @param distance The distance to move the line.
- * @param directionVector The direction in which to move the line.
- * @return None.
- */
-template <>
-void moveBoundary<Line>(Line& data, const double& distance, Point2D directionVector)
-{
-    standardization(directionVector);
-    double dx = directionVector.x() * distance;
-    double dy = directionVector.y() * distance;
-
-    data.first.x(data.first.x() + dx);
-    data.first.y(data.first.y() + dy);
-    data.second.x(data.second.x() + dx);
-    data.second.y(data.second.y() + dy);
-}
-
-/**
- * Displacement arc.
- * @return None.
- */
-template <>
-void moveBoundary<Arc>(Arc& data, const double& distance, Point2D directionVector)
-{
-    std::cout << "hi";
-}
-
-
-/**
  * Standardized parameter.
  * @param p Two dimensional Point2D.
  * @return None.
@@ -171,6 +139,18 @@ void standardization(Point2D& p)
     double r = sqrt(p.x() * p.x() + p.y() * p.y());
     p.x(p.x() / r);
     p.y(p.y() / r);
+}
+
+void moveBoundary(Line& data, const double& distance, Point2D directionVector)
+{
+    standardization(directionVector);
+    double dx = directionVector.x() * distance;
+    double dy = directionVector.y() * distance;
+
+    data.first.x(data.first.x() + dx);
+    data.first.y(data.first.y() + dy);
+    data.second.x(data.second.x() + dx);
+    data.second.y(data.second.y() + dy); 
 }
 
 

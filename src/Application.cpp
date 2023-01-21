@@ -4,14 +4,16 @@
 #include "Copper.h"
 #include "Silkscreen.h"
 #include "Math.h"
+#include <stdio.h>
 
 Application::Application()
+
 {
     // read data and set in specific component
     preProcessInputData();
     processSilkscreen();
     Line l1 = Line(Point2D(0, 1), Point2D(1, 0));
-    bg::extra::moveBoundary<Line>(l1, 5, Point2D(5, 5));
+    bg::extra::moveBoundary(l1, 5, Point2D(5, 5));
     std::cout << l1.first.x() << " " << l1.first.y() << std::endl;
     std::cout << l1.second.x() << " " << l1.second.y() << std::endl;
     std::cout << std::get<Arc>(coppers[0].lines_arcs[1]).getPositionOnArc(0, 0)[0] << std::endl;
