@@ -27,12 +27,18 @@ double Base::getArea()
 
             bg::append(polygon.outer(), arc.begin);
             bg::append(polygon.outer(), arc.center);
+        }
+    }
+    for (const std::variant<Line, Arc>& element : lines_arcs)
+    {
+        if (std::holds_alternative<Arc>(element))
+        {
+            Arc arc = std::get<Arc>(element);
 
-            // posi[0] -> x, posi[1] -> y
-            std::vector<double> posi = arc.getPositionOnArc(arc.angle / 2);
+            Point2D posi = bg::extra::getMiddle(arc.getPositionOnArc(arc.angle / 2), arc.center);
 
             // detect arc is outer or inner
-            if (bg::within(Point2D(posi[0], posi[1]), polygon))
+            if (bg::within(posi, polygon))
             {
                 // inner, minus arc area
                 area -= arc.getArea();

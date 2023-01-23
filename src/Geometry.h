@@ -1,7 +1,5 @@
 #include <boost/geometry/geometry.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
-#include "Math.h"
-#include "Arc.h"
 
 namespace bg = boost::geometry;
 typedef bg::model::d2::point_xy<double> Point2D;      // point
@@ -10,6 +8,9 @@ typedef bg::model::polygon<Point2D> Polygon;          // Points
 
 #ifndef _GEOMETRY_H_
 #define _GEOMETRY_H_
+
+#include "Math.h"
+#include "Arc.h"
 
 
 namespace boost { namespace geometry
@@ -34,7 +35,15 @@ double nomalizeAngle(const double& angle, const int& mode = 0);
 
 void standardization(Point2D& p);
 
-void moveBoundary(Line& data, const double& distance, Point2D directionVector);
+template <typename T>
+void moveBoundary(T& data, const double& distance, Point2D directionVector);
+
+Point2D getMiddle(const Point2D& first, const Point2D& second);
+
+
+
+// template <typename T>
+// void moveBoundary(T& data, const double& distance, Point2D directionVector) {}
 
 // /**
 //  * Move a boundary line by a given distance in a given direction.

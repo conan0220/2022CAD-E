@@ -12,12 +12,43 @@ Application::Application()
     // read data and set in specific component
     preProcessInputData();
     processSilkscreen();
-    Line l1 = Line(Point2D(0, 1), Point2D(1, 0));
-    bg::extra::moveBoundary(l1, 5, Point2D(5, 5));
-    std::cout << l1.first.x() << " " << l1.first.y() << std::endl;
-    std::cout << l1.second.x() << " " << l1.second.y() << std::endl;
-    std::cout << std::get<Arc>(coppers[0].lines_arcs[1]).getPositionOnArc(0, 0)[0] << std::endl;
     std::cout << assembly.getArea() << std::endl;
+    // Point2D begin;
+    // Point2D end;
+    // Point2D center;
+    // double temp;
+    // while (std::cin >> temp)
+    // {
+    //     if (temp == 999)
+    //         break;
+    //     std::cout << "begin.x = ";
+    //     std::cin >> temp;
+    //     bg::set<0>(begin, temp);
+    //     std::cout << "begin.y = ";
+    //     std::cin >> temp;
+    //     bg::set<1>(begin, temp);
+    //     std::cout << "end.x = ";
+    //     std::cin >> temp;
+    //     bg::set<0>(end, temp);
+    //     std::cout << "end.y = ";
+    //     std::cin >> temp;
+    //     bg::set<1>(end, temp);
+    //     std::cout << "center.x = ";
+    //     std::cin >> temp;
+    //     bg::set<0>(center, temp);
+    //     std::cout << "center.y = ";
+    //     std::cin >> temp;
+    //     bg::set<1>(center, temp);
+    //     std::cout << "clockWise = ";
+    //     std::cin >> temp;
+    //     Arc arc = Arc(begin, end, center, temp);
+    //     std::cout << "angle = ";
+    //     std::cin >> temp;
+    //     Point2D position = arc.getPositionOnArc(temp, 1);
+    //     std::cout << "x = " << position.x() << std::endl;
+    //     std::cout << "y = " << position.y() << std::endl; 
+    // }
+    
 }
 
 /**

@@ -7,23 +7,23 @@ Arc::Arc(Point2D begin, Point2D end, Point2D center, bool clockWise)
     : begin(begin), end(end), center(center), clockWise(clockWise)
 {
     radius = bg::distance(begin, center);
-    beginAngle = bg::extra::getAngle(center, begin, 1);
-    endAngle = bg::extra::getAngle(center, end, 1);
+    beginAngle = bg::extra::getAngle(center, begin, 0);
+    endAngle = bg::extra::getAngle(center, end, 0);
     angle = getAngleBetweenBeginAndEnd();
 }
 
 double Arc::getArea() const
 {
-    return PI * pow(radius, 2) * (angle / 2 * PI);
+    return PI * pow(radius, 2) * (angle / (2 * PI));
 }
 
 /**
  * Get the coordinate of the point on the arc.
- * @param angle The angle of the point from the starting point of the arc, measured in radians and the clockwise of object. If the angle is outside of the range [0, degree], it will be converted to the range [0, degree].
+ * @param angle The angle of the point from the starting point of the arc, measured in radians and the clockwise of object.
  * @param mode  The mode of the input angle, 0 for radian (default), 1 for degree.
- * @return Return a vector which contains the coordinate of position on arc. First element is x, second is y.
+ * @return Return a Point2D which contains the coordinate of position on arc. First element is x, second is y.
  */
-std::vector<double> Arc::getPositionOnArc(double angle_t, int mode) const
+Point2D Arc::getPositionOnArc(double angle_t, int mode) const
 {
     angle_t = bg::extra::nomalizeAngle(angle_t, mode);
 
@@ -31,16 +31,12 @@ std::vector<double> Arc::getPositionOnArc(double angle_t, int mode) const
     if (mode == 1)
         angle_t = bg::extra::degreeToRadian(angle_t);
 
-    // adjust angle by the direction of the coordinate axis
-    if (clockWise)
-        angle_t = beginAngle - angle_t;
-    else
-        angle_t = beginAngle + angle_t;
+    if (clockWise == true)
+        angle_t = -angle_t;
 
-    // calculate the coordinates
-    std::vector<double> position;
-    position.push_back(center.x() + radius * cos(angle_t));
-    position.push_back(center.y() + radius * sin(angle_t));
+    Point2D position;
+    position.x(center.x() + radius * cos(angle_t + beginAngle));
+    position.y(center.y() + radius * sin(angle_t + beginAngle));
 
     return position;
 }
@@ -49,7 +45,7 @@ std::vector<double> Arc::getPositionOnArc(double angle_t, int mode) const
  * Get degree between beginDegree and endDegree, so you have to set beginDegree and endDegree first.
  * @return Degree.
  */
-double Arc::getAngleBetweenBeginAndEnd() const
+double Arc::getAngleBetweenBeginAndEnd(int mode) const
 {
     // if the start and end point are identical then denote that arc is a circle
     if (bg::extra::equal(begin, end))
@@ -63,5 +59,8 @@ double Arc::getAngleBetweenBeginAndEnd() const
     else if (beginAngle > endAngle)
         clockWise == true ? angle_t = beginAngle - endAngle : angle_t = 2 * PI - (beginAngle - endAngle);
 
-    return angle_t;
+    if (mode == 0)
+        return angle_t;
+    else 
+        return bg::extra::radianToDegree(angle_t);
 }

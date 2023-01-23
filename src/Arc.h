@@ -8,7 +8,7 @@
 
 #include "Geometry.h"
 
-/// @brief Arc
+/// @brief angle: radian(default)
 class Arc
 {
 public:
@@ -17,7 +17,7 @@ public:
     ~Arc() {};
 
     double getArea() const;
-    std::vector<double> getPositionOnArc(double angle_t, int mode = 0) const;
+    Point2D getPositionOnArc(double angle_t, int mode = 0) const;
     
     Point2D begin;
     Point2D end;
@@ -29,7 +29,7 @@ public:
     double angle;  // degree between beginDegree and endDegree
 
 private:
-    double getAngleBetweenBeginAndEnd() const;
+    double getAngleBetweenBeginAndEnd(int mode = 0) const;
     
 };
 
