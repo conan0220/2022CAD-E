@@ -41,42 +41,6 @@ void moveBoundary(T& data, const double& distance, Point2D directionVector);
 Point2D getMiddle(const Point2D& first, const Point2D& second);
 
 
-
-// template <typename T>
-// void moveBoundary(T& data, const double& distance, Point2D directionVector) {}
-
-// /**
-//  * Move a boundary line by a given distance in a given direction.
-//  * @param data The boundary line to move.
-//  * @param distance The distance to move the line.
-//  * @param directionVector The direction in which to move the line.
-//  * @return None.
-//  */
-// template < >
-// void moveBoundary(Line& data, const double& distance, Point2D directionVector)
-// {
-//     standardization(directionVector);
-//     double dx = directionVector.x() * distance;
-//     double dy = directionVector.y() * distance;
-
-//     data.first.x(data.first.x() + dx);
-//     data.first.y(data.first.y() + dy);
-//     data.second.x(data.second.x() + dx);
-//     data.second.y(data.second.y() + dy);
-// }
-
-// /**
-//  * Displacement arc.
-//  * @return None.
-//  */
-// template < >
-// void moveBoundary<Arc>(Arc& data, const double& distance, Point2D directionVector)
-// {
-//     std::cout << "hi";
-// }
-
-
-
 }   // namespace boost::geometry::extra
 
 }   // namespace boost::geometry
