@@ -12,6 +12,8 @@ public:
     Copper() {};
     ~Copper() {};
 
+    void operator=(const Copper& other);
+
 };
 
 

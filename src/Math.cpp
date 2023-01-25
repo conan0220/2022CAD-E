@@ -20,4 +20,15 @@ double cosineLaw(const Point2D& p1, const Point2D& p2, const Point2D& p3)
     return cos;
 }
 
+/**
+ * roundToDecimal function, round the number to the specified decimal place.
+ * @param num The number that need to be rounded.
+ * @param decimalPlace The number of decimal places to round to.
+ */
+void roundToDecimal(double& num, int decimalPlace)
+{
+    double factor = pow(10, decimalPlace);
+    num = round(num * factor) / factor;
+}
+
 }

@@ -9,46 +9,8 @@
 Application::Application()
 
 {
-    // read data and set in specific component
     preProcessInputData();
     processSilkscreen();
-    std::cout << assembly.getArea() << std::endl;
-    // Point2D begin;
-    // Point2D end;
-    // Point2D center;
-    // double temp;
-    // while (std::cin >> temp)
-    // {
-    //     if (temp == 999)
-    //         break;
-    //     std::cout << "begin.x = ";
-    //     std::cin >> temp;
-    //     bg::set<0>(begin, temp);
-    //     std::cout << "begin.y = ";
-    //     std::cin >> temp;
-    //     bg::set<1>(begin, temp);
-    //     std::cout << "end.x = ";
-    //     std::cin >> temp;
-    //     bg::set<0>(end, temp);
-    //     std::cout << "end.y = ";
-    //     std::cin >> temp;
-    //     bg::set<1>(end, temp);
-    //     std::cout << "center.x = ";
-    //     std::cin >> temp;
-    //     bg::set<0>(center, temp);
-    //     std::cout << "center.y = ";
-    //     std::cin >> temp;
-    //     bg::set<1>(center, temp);
-    //     std::cout << "clockWise = ";
-    //     std::cin >> temp;
-    //     Arc arc = Arc(begin, end, center, temp);
-    //     std::cout << "angle = ";
-    //     std::cin >> temp;
-    //     Point2D position = arc.getPositionOnArc(temp, 1);
-    //     std::cout << "x = " << position.x() << std::endl;
-    //     std::cout << "y = " << position.y() << std::endl; 
-    // }
-    
 }
 
 /**
@@ -62,69 +24,56 @@ void Application::preProcessInputData()
     for (std::string str : text)    // line by line
     {
         std::vector<double> data = text::extractNumeric(str);      //  numbers in the string
+        for (double& i : data)
+            math::roundToDecimal(i, 4);
 
         // identify the keyword of str
         if (text::isTargetInString(str, "line"))
         {
             Line dataTemp = Line(Point2D(data[0], data[1]), Point2D(data[2], data[3]));
             if (targetComponent == "assembly")
-            {
                 assembly.lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
-            }
             else if (targetComponent == "copper")
-            {
                 coppers.back().lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
-            }
         }
         else if (text::isTargetInString(str, "arc"))
         {
             bool clockWiseTemp = !text::isTargetInString(str, "CCW");
             Arc dataTemp = Arc(Point2D(data[0], data[1]), Point2D(data[2], data[3]), Point2D(data[4], data[5]), clockWiseTemp);
             if (targetComponent == "assembly")
-            {
                 assembly.lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
-            }
             else if (targetComponent == "copper")
-            {
                 coppers.back().lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
-            }
         }
         else if (text::isTargetInString(str, "coppergap"))
-        {
             Copper::copperGap = data[0];
-        }
         else if (text::isTargetInString(str, "copper"))
         {
             targetComponent = "copper";
             coppers.push_back(Copper());
         }
         else if (text::isTargetInString(str, "assemblygap"))
-        {
             Assembly::assemblyGap = data[0];
-        }
         else if (text::isTargetInString(str, "assembly"))
-        {
             targetComponent = "assembly";
-        }
         else if (text::isTargetInString(str, "silkscreenlen"))
-        {
             Silkscreen::silkscreenLen = data[0];
-        }
     }
 }
 
 void Application::processSilkscreen()
 {
-    preProcessSilkscreenData();
+    setExpandedComponments();
 }
 
-/**
- * Put Assembly data into Silkscreens separately
- * @return None
+/*
+ * This function is used to set the expanded version of the assembly and coppers.
  */
-void Application::preProcessSilkscreenData()
+void Application::setExpandedComponments()
 {
-    
+    expandedAssembly = assembly;
+    for (const Copper& copper : coppers)
+        expandedCoppers.push_back(copper);
 }
 
 /**

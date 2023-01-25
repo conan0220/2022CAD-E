@@ -12,12 +12,16 @@ public:
 
     Assembly assembly;
     std::vector<Copper> coppers;
+
+    Assembly expandedAssembly;
+    std::vector<Copper> expandedCoppers;
+
     std::vector<Silkscreen> silkscreens;
 
 private:
     void preProcessInputData();
     void processSilkscreen();
-    void preProcessSilkscreenData();
+    void setExpandedComponments();
 
     void outputToTxt(std::string filePath);
 

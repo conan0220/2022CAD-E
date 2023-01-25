@@ -40,9 +40,7 @@ std::vector<std::string> loadFile(std::string filePath)
 	std::string lineText = "";
 	std::vector<std::string> txt;
 	while (std::getline(file, lineText))
-	{
 		txt.push_back(lineText);
-	}
 	file.close();
 	return txt;
 }

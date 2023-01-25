@@ -1,8 +1,7 @@
 #include "Base.h"
-#include "Geometry.h"
-
 #include "Math.h"
 #include <cmath>
+
 
 /**
  * Get polygon area.

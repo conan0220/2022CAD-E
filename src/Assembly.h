@@ -3,7 +3,6 @@
 
 #include "Base.h"
 
-/// @brief A  component
 class Assembly : public Base
 {
 public:
@@ -11,6 +10,8 @@ public:
   
     Assembly() {}
     ~Assembly() {}
+
+    void operator=(const Assembly& other);
 
 };
 
