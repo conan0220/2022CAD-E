@@ -11,6 +11,11 @@ Application::Application()
 {
     preProcessInputData();
     processSilkscreen();
+    Line line = Line(Point2D(0, 0), Point2D(1, 0));
+    bg::extra::moveBoundary<Line>(line, 1, Point2D(0, 1));
+    std::cout << line.first.x() << " " << line.first.y() << std::endl;
+    std::cout << line.second.x() << " " << line.second.y() << std::endl;
+    outputToTxt("../res/output.txt");
 }
 
 /**
@@ -31,8 +36,10 @@ void Application::preProcessInputData()
         if (text::isTargetInString(str, "line"))
         {
             Line dataTemp = Line(Point2D(data[0], data[1]), Point2D(data[2], data[3]));
+
             if (targetComponent == "assembly")
                 assembly.lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
+
             else if (targetComponent == "copper")
                 coppers.back().lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
         }
@@ -40,13 +47,16 @@ void Application::preProcessInputData()
         {
             bool clockWiseTemp = !text::isTargetInString(str, "CCW");
             Arc dataTemp = Arc(Point2D(data[0], data[1]), Point2D(data[2], data[3]), Point2D(data[4], data[5]), clockWiseTemp);
+
             if (targetComponent == "assembly")
                 assembly.lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
+
             else if (targetComponent == "copper")
                 coppers.back().lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
         }
         else if (text::isTargetInString(str, "coppergap"))
             Copper::copperGap = data[0];
+
         else if (text::isTargetInString(str, "copper"))
         {
             targetComponent = "copper";
@@ -54,8 +64,10 @@ void Application::preProcessInputData()
         }
         else if (text::isTargetInString(str, "assemblygap"))
             Assembly::assemblyGap = data[0];
+
         else if (text::isTargetInString(str, "assembly"))
             targetComponent = "assembly";
+
         else if (text::isTargetInString(str, "silkscreenlen"))
             Silkscreen::silkscreenLen = data[0];
     }
@@ -64,6 +76,7 @@ void Application::preProcessInputData()
 void Application::processSilkscreen()
 {
     setExpandedComponments();
+    moveExpandedComponments();
 }
 
 /*
@@ -76,6 +89,25 @@ void Application::setExpandedComponments()
         expandedCoppers.push_back(copper);
 }
 
+void Application::moveExpandedComponments()
+{
+    for (std::variant<Line, Arc>& element : expandedAssembly.lines_arcs)
+    {
+        if (std::holds_alternative<Line>(element))
+        {
+            Point2D normalVector = bg::extra::getNormalVector(std::get<Line>(element));
+            normalVector.x(normalVector.x() * (-1));
+            normalVector.y(normalVector.y() * (-1));
+            bg::extra::standardization(normalVector);
+            bg::extra::moveBoundary<Line>(std::get<Line>(element), assembly.assemblyGap, normalVector);
+        }
+        else if (std::holds_alternative<Arc>(element))
+        {
+            std::get<Arc>(element).radius += assembly.assemblyGap;
+        }    
+    }
+}
+
 /**
  * Output silkscreens to txt file.
  * @param filePath File path.
@@ -84,6 +116,24 @@ void Application::setExpandedComponments()
 void Application::outputToTxt(std::string filePath)
 {
     std::vector<std::string> text;
+
+    text.push_back("assembly");
+    for (const std::variant<Line, Arc>& element : expandedAssembly.lines_arcs)
+    {
+        // Element type is Line?
+        if (std::holds_alternative<Line>(element))
+        {
+            Line line = std::get<Line>(element);
+            text.push_back("line," + std::to_string(line.first.x()) + "," + std::to_string(line.first.y()) + "," + std::to_string(line.second.x()) + "," + std::to_string(line.second.y()));
+        }
+        // Element type is Arc?
+        else if (std::holds_alternative<Arc>(element))
+        {
+            Arc arc = std::get<Arc>(element);
+            text.push_back("Arc," + std::to_string(arc.begin.x()) + "," + std::to_string(arc.begin.y()) + "," + std::to_string(arc.end.x()) + "," + std::to_string(arc.end.y()) + "," + std::to_string(arc.center.x()) + "," + std::to_string(arc.center.y()) + "," + (arc.clockWise ? "CW" : "CCW"));
+        }
+    }
+
     for (const Silkscreen& silkscreen : silkscreens)
     {
         text.push_back("silkscreen");
@@ -103,6 +153,7 @@ void Application::outputToTxt(std::string filePath)
                 text.push_back("Arc," + std::to_string(arc.begin.x()) + "," + std::to_string(arc.begin.y()) + "," + std::to_string(arc.end.x()) + "," + std::to_string(arc.end.y()) + "," + std::to_string(arc.center.x()) + "," + std::to_string(arc.center.y()) + "," + (arc.clockWise ? "CW" : "CCW"));
             }
         }
-            
     }
+
+    text::writeFile(text, filePath);
 }

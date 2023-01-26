@@ -148,7 +148,7 @@ void moveBoundary(T& data, const double& distance, Point2D directionVector) {}
  * Move a boundary line by a given distance in a given direction.
  * @param data The boundary line to move.
  * @param distance The distance to move the line.
- * @param directionVector The direction in which to move the line.
+ * @param directionVector The direction in which to move the line compare to (0, 0).
  * @return None.
  */
 template < >
@@ -180,6 +180,17 @@ Point2D getMiddle(const Point2D& first, const Point2D& second)
 {
     Point2D middle((first.x() + second.x()) / 2, (second.y() + second.y()) / 2);
     return middle;
+}
+
+/**
+ * The normal vector of a line has two directions based on the order of the points in the line. This function only provides one vector. If you want the opposite direction, you need to negate the x and y of the vector. In other words, you need another function or statement to determine if this vector is the one you want.
+ * @param line 
+ */
+Point2D getNormalVector(const Line& line) 
+{
+    // vector of line
+    Point2D segmentVector = Point2D(line.first.x() - line.second.x(), line.first.y() - line.second.y());
+    return Point2D(-segmentVector.y(), segmentVector.x());
 }
 
 }   // namespace boost::geometry::extra

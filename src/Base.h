@@ -14,10 +14,10 @@ public:
     Base() {};
     ~Base() {}
     
-    double getArea();
+    double getArea() const;
+    Polygon getPolygon() const;
 
     std::vector<std::variant<Line, Arc>> lines_arcs;    // orderly lines and arcs
-
 private:
 };
 

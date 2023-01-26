@@ -22,6 +22,7 @@ private:
     void preProcessInputData();
     void processSilkscreen();
     void setExpandedComponments();
+    void moveExpandedComponments();
 
     void outputToTxt(std::string filePath);
 

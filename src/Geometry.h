@@ -1,10 +1,12 @@
 #include <boost/geometry/geometry.hpp>
 #include <boost/geometry/geometries/point_xy.hpp>
+#include <boost/geometry/geometries/linestring.hpp>
 
 namespace bg = boost::geometry;
 typedef bg::model::d2::point_xy<double> Point2D;      // point
 typedef bg::model::segment<Point2D> Line;             // line
 typedef bg::model::polygon<Point2D> Polygon;          // Points
+
 
 #ifndef _GEOMETRY_H_
 #define _GEOMETRY_H_
@@ -15,6 +17,8 @@ typedef bg::model::polygon<Point2D> Polygon;          // Points
 
 namespace boost { namespace geometry
 {
+
+
 
 // extra function set under boost::geometry
 namespace extra
@@ -40,6 +44,7 @@ void moveBoundary(T& data, const double& distance, Point2D directionVector);
 
 Point2D getMiddle(const Point2D& first, const Point2D& second);
 
+Point2D getNormalVector(const Line& line);
 
 }   // namespace boost::geometry::extra
 

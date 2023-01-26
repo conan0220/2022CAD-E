@@ -7,27 +7,10 @@
  * Get polygon area.
  * @return {double}
  */
-double Base::getArea()
+double Base::getArea() const
 {
-    Polygon polygon;    // closed path of points
+    Polygon polygon = getPolygon();
     double area = 0;
-
-    for (const std::variant<Line, Arc>& element : lines_arcs)
-    {
-        // Element type is Line?
-        if (std::holds_alternative<Line>(element))
-        {
-            bg::append(polygon.outer(), std::get<Line>(element).first);
-        }
-        // Element type is Arc?
-        else if (std::holds_alternative<Arc>(element))
-        {
-            Arc arc = std::get<Arc>(element);
-
-            bg::append(polygon.outer(), arc.begin);
-            bg::append(polygon.outer(), arc.center);
-        }
-    }
     for (const std::variant<Line, Arc>& element : lines_arcs)
     {
         if (std::holds_alternative<Arc>(element))
@@ -52,4 +35,27 @@ double Base::getArea()
     area += abs(bg::area(polygon));
 
     return area;
+}
+
+ // closed path of points
+Polygon Base::getPolygon() const
+{
+    Polygon polygon;
+    for (const std::variant<Line, Arc>& element : lines_arcs)
+    {
+        // Element type is Line?
+        if (std::holds_alternative<Line>(element))
+        {
+            bg::append(polygon.outer(), std::get<Line>(element).first);
+        }
+        // Element type is Arc?
+        else if (std::holds_alternative<Arc>(element))
+        {
+            Arc arc = std::get<Arc>(element);
+
+            bg::append(polygon.outer(), arc.begin);
+            bg::append(polygon.outer(), arc.center);
+        }
+    }
+    return polygon;
 }

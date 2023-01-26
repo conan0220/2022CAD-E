@@ -9,17 +9,14 @@ import math
 def setFigure(pixel):
     plt.figure(dpi=pixel)
 
-def plot(components, color="black"):
+def plot(components, color="blue"):
     ax = plt.subplot()
+    ax.set_facecolor('#333333')  
     for component in components:
         for line in component.lines:
             plt.plot([line.n1.x, line.n2.x], [line.n1.y, line.n2.y], linewidth=1, color=color)       
         for arc in component.arcs:
             ax.add_patch(mpatches.Arc((arc.center.x, arc.center.y), arc.radius*2, arc.radius*2, theta1=arc.endAngle, theta2=arc.beginAngle, color=color, linewidth=1))
-
-
-
-
 
 
 def loadFile(filePath):
@@ -32,10 +29,7 @@ def numsFromString(str):
     return nfs.get_nums(str)
 
 
-
-
-
-def preprocessData(file_path):
+def preprocessInputData(file_path):
     # read data and put it into components
     text = loadFile(file_path)
     presentComponent = "None"
@@ -48,31 +42,52 @@ def preprocessData(file_path):
             coppers.append(Copper())
         elif "line" in line:
             dataOfLine = numsFromString(line)
-            newLine = Line(Node(dataOfLine[0], dataOfLine[1]), Node(
-                dataOfLine[2], dataOfLine[3]))
+            newLine = Line(Node(dataOfLine[0], dataOfLine[1]), Node(dataOfLine[2], dataOfLine[3]))
             if presentComponent == "assembly":
                 assemblies[-1].lines.append(newLine)
             if presentComponent == "copper":
                 coppers[-1].lines.append(newLine)
         elif "arc" in line:
             dataOfLine = numsFromString(line)
-            newArc = Arc(Node(dataOfLine[0], dataOfLine[1]), Node(
-                dataOfLine[2], dataOfLine[3]), Node(dataOfLine[4], dataOfLine[5]), "CCW" not in line)
+            newArc = Arc(Node(dataOfLine[0], dataOfLine[1]), Node(dataOfLine[2], dataOfLine[3]), Node(dataOfLine[4], dataOfLine[5]), "CCW" not in line)
             if presentComponent == "assembly":
                 assemblies[-1].arcs.append(newArc)
             if presentComponent == "copper":
                 coppers[-1].arcs.append(newArc)
 
-
-
-
-
-
+def preprocessOutputData(file_path):
+    # read data and put it into components
+    text = loadFile(file_path)
+    presentComponent = "None"
+    for line in text:
+        if "assembly" in line and "assemblygap" not in line:
+            presentComponent = "assembly"
+            expanded_assemblies.append(Assembly())
+        elif "copper" in line and "coppergap" not in line:
+            presentComponent = "copper"
+            expanded_coppers.append(Copper())
+        elif "line" in line:
+            dataOfLine = numsFromString(line)
+            newLine = Line(Node(dataOfLine[0], dataOfLine[1]), Node(dataOfLine[2], dataOfLine[3]))
+            if presentComponent == "assembly":
+                expanded_assemblies[-1].lines.append(newLine)
+            if presentComponent == "copper":
+                expanded_coppers[-1].lines.append(newLine)
+        elif "arc" in line:
+            dataOfLine = numsFromString(line)
+            newArc = Arc(Node(dataOfLine[0], dataOfLine[1]), Node(dataOfLine[2], dataOfLine[3]), Node(dataOfLine[4], dataOfLine[5]), "CCW" not in line)
+            if presentComponent == "assembly":
+                expanded_assemblies[-1].arcs.append(newArc)
+            if presentComponent == "copper":
+                expanded_coppers[-1].arcs.append(newArc)
 
 
 # Components
 assemblies = []
 coppers = []
+
+expanded_assemblies = []
+expanded_coppers = []
 
 class Base:
     ASSEMBLY_GAP = None
@@ -147,9 +162,12 @@ def calculateDegree(center, n):
 
 
 
-preprocessData("res/testing-data.txt")
+preprocessInputData("D:/repos/2022CAD-E/res/testing-data.txt")
+preprocessOutputData("D:/repos/2022CAD-E/res/output.txt")
 setFigure(pixel=130)
-plot(assemblies, "blue")
-plot(coppers, "red")
 
+plot(assemblies, "white")
+plot(coppers, "white")
+plot(expanded_assemblies, "yellow")
+plot(expanded_coppers, "yellow")
 plt.show()              
