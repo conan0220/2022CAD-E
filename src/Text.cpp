@@ -93,19 +93,27 @@ std::vector<double> getDataFromText(std::vector<std::string> text, int start)
  * Write text to the file.
  * @param text A text.
  * @param filePath File path.
+ * @param clear Clear the contents of the current text file. Instead, write new content after the end of the file.
  * @return None
  */
-void writeFile(const std::vector<std::string>& text, std::string filePath)
+void writeFile(const std::vector<std::string>& text, std::string filePath, bool clear)
 {
 	std::ofstream ofs;
-
-	ofs.open(filePath);
-
+	clear ? ofs.open(filePath, std::ofstream::out) : ofs.open(filePath, std::ofstream::app);
 	for (const std::string& str : text)
-	{
 		ofs << str << std::endl;
-	}
+	ofs.close();
+}
 
+/**
+ * Clear the content of the text file.
+ * @param filePath The path of the text file.
+ * @return None.
+ */
+void clearTextFile(std::string filePath)
+{
+	std::ofstream ofs;
+	ofs.open(filePath, std::ofstream::out | std::ofstream::trunc);
 	ofs.close();
 }
 

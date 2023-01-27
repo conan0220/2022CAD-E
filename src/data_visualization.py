@@ -29,7 +29,7 @@ def numsFromString(str):
     return nfs.get_nums(str)
 
 
-def preprocessInputData(file_path):
+def preprocessData(file_path, assemblies, coppers):
     # read data and put it into components
     text = loadFile(file_path)
     presentComponent = "None"
@@ -54,32 +54,6 @@ def preprocessInputData(file_path):
                 assemblies[-1].arcs.append(newArc)
             if presentComponent == "copper":
                 coppers[-1].arcs.append(newArc)
-
-def preprocessOutputData(file_path):
-    # read data and put it into components
-    text = loadFile(file_path)
-    presentComponent = "None"
-    for line in text:
-        if "assembly" in line and "assemblygap" not in line:
-            presentComponent = "assembly"
-            expanded_assemblies.append(Assembly())
-        elif "copper" in line and "coppergap" not in line:
-            presentComponent = "copper"
-            expanded_coppers.append(Copper())
-        elif "line" in line:
-            dataOfLine = numsFromString(line)
-            newLine = Line(Node(dataOfLine[0], dataOfLine[1]), Node(dataOfLine[2], dataOfLine[3]))
-            if presentComponent == "assembly":
-                expanded_assemblies[-1].lines.append(newLine)
-            if presentComponent == "copper":
-                expanded_coppers[-1].lines.append(newLine)
-        elif "arc" in line:
-            dataOfLine = numsFromString(line)
-            newArc = Arc(Node(dataOfLine[0], dataOfLine[1]), Node(dataOfLine[2], dataOfLine[3]), Node(dataOfLine[4], dataOfLine[5]), "CCW" not in line)
-            if presentComponent == "assembly":
-                expanded_assemblies[-1].arcs.append(newArc)
-            if presentComponent == "copper":
-                expanded_coppers[-1].arcs.append(newArc)
 
 
 # Components
@@ -162,8 +136,8 @@ def calculateDegree(center, n):
 
 
 
-preprocessInputData("D:/repos/2022CAD-E/res/testing-data.txt")
-preprocessOutputData("D:/repos/2022CAD-E/res/output.txt")
+preprocessData("D:/repos/2022CAD-E/res/testing-data.txt", assemblies=assemblies, coppers=coppers)
+preprocessData("D:/repos/2022CAD-E/res/output.txt", assemblies=expanded_assemblies, coppers=expanded_coppers)
 setFigure(pixel=130)
 
 plot(assemblies, "white")

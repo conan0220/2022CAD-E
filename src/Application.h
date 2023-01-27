@@ -24,7 +24,8 @@ private:
     void setExpandedComponments();
     void moveExpandedComponments();
 
-    void outputToTxt(std::string filePath);
+    template <typename Componment>
+    void outputToTxt(std::string filePath, const Componment& componment, const std::string componmentName);
 
 };
 

@@ -11,11 +11,10 @@ Application::Application()
 {
     preProcessInputData();
     processSilkscreen();
-    Line line = Line(Point2D(0, 0), Point2D(1, 0));
-    bg::extra::moveBoundary<Line>(line, 1, Point2D(0, 1));
-    std::cout << line.first.x() << " " << line.first.y() << std::endl;
-    std::cout << line.second.x() << " " << line.second.y() << std::endl;
-    outputToTxt("../res/output.txt");
+    text::clearTextFile("../res/output.txt");
+    outputToTxt<Assembly>("../res/output.txt", expandedAssembly, "assembly");
+    // for (const Copper& expandedCopper : coppers)
+    //     outputToTxt<Copper>("../res/output.txt", expandedCopper, "copper");
 }
 
 /**
@@ -109,16 +108,17 @@ void Application::moveExpandedComponments()
 }
 
 /**
- * Output silkscreens to txt file.
+ * Output Componment to txt file. Ex. Assembly, Copper, Silkscreen.
  * @param filePath File path.
  * @return None.
  */
-void Application::outputToTxt(std::string filePath)
+template <typename Componment>
+void Application::outputToTxt(std::string filePath, const Componment& componment, const std::string componmentName)
 {
     std::vector<std::string> text;
 
-    text.push_back("assembly");
-    for (const std::variant<Line, Arc>& element : expandedAssembly.lines_arcs)
+    text.push_back(componmentName);
+    for (const std::variant<Line, Arc>& element : componment.lines_arcs)
     {
         // Element type is Line?
         if (std::holds_alternative<Line>(element))
@@ -130,30 +130,11 @@ void Application::outputToTxt(std::string filePath)
         else if (std::holds_alternative<Arc>(element))
         {
             Arc arc = std::get<Arc>(element);
-            text.push_back("Arc," + std::to_string(arc.begin.x()) + "," + std::to_string(arc.begin.y()) + "," + std::to_string(arc.end.x()) + "," + std::to_string(arc.end.y()) + "," + std::to_string(arc.center.x()) + "," + std::to_string(arc.center.y()) + "," + (arc.clockWise ? "CW" : "CCW"));
+            text.push_back("arc," + std::to_string(arc.begin.x()) + "," + std::to_string(arc.begin.y()) + "," + std::to_string(arc.end.x()) + "," + std::to_string(arc.end.y()) + "," + std::to_string(arc.center.x()) + "," + std::to_string(arc.center.y()) + "," + (arc.clockWise ? "CW" : "CCW"));
         }
     }
 
-    for (const Silkscreen& silkscreen : silkscreens)
-    {
-        text.push_back("silkscreen");
-        
-        for (const std::variant<Line, Arc>& element : silkscreen.lines_arcs)
-        {
-            // Element type is Line?
-            if (std::holds_alternative<Line>(element))
-            {
-                Line line = std::get<Line>(element);
-                text.push_back("line," + std::to_string(line.first.x()) + "," + std::to_string(line.first.y()) + "," + std::to_string(line.second.x()) + "," + std::to_string(line.second.y()));
-            }
-            // Element type is Arc?
-            else if (std::holds_alternative<Arc>(element))
-            {
-                Arc arc = std::get<Arc>(element);
-                text.push_back("Arc," + std::to_string(arc.begin.x()) + "," + std::to_string(arc.begin.y()) + "," + std::to_string(arc.end.x()) + "," + std::to_string(arc.end.y()) + "," + std::to_string(arc.center.x()) + "," + std::to_string(arc.center.y()) + "," + (arc.clockWise ? "CW" : "CCW"));
-            }
-        }
-    }
-
-    text::writeFile(text, filePath);
+    text::writeFile(text, filePath, false);
 }
+
+
