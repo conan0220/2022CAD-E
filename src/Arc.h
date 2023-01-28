@@ -9,8 +9,7 @@
 #include "Geometry.h"
 
 /// @brief angle: radian(default)
-class Arc
-{
+class Arc {
 public:
     Arc() {};
     Arc(Point2D begin, Point2D end, Point2D center, bool clockWise);
@@ -30,7 +29,6 @@ public:
 
 private:
     double getAngleBetweenBeginAndEnd(int mode = 0) const;
-    
 };
 
 #endif /* _ARC_H_ */

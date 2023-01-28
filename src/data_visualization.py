@@ -4,8 +4,6 @@ import nums_from_string as nfs
 import math
 
 
-
-
 def setFigure(pixel):
     plt.figure(dpi=pixel)
 

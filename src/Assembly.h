@@ -3,16 +3,15 @@
 
 #include "Base.h"
 
-class Assembly : public Base
-{
+class Assembly : public Base {
 public:
-    static double assemblyGap;
   
     Assembly() {}
     ~Assembly() {}
 
     void operator=(const Assembly& other);
 
+    static double assemblyGap;
 };
 
 

@@ -4,16 +4,14 @@
 #include "Base.h"
 
 /// @brief A  component
-class Copper : public Base
-{
+class Copper : public Base {
 public:
-    static double copperGap;
-    
     Copper() {};
     ~Copper() {};
 
     void operator=(const Copper& other);
 
+    static double copperGap;
 };
 
 

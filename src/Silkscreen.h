@@ -4,13 +4,12 @@
 #include "Base.h"
 
 /// @brief A  component;
-class Silkscreen : public Base
-{
+class Silkscreen : public Base {
 public:
-    static double silkscreenLen;
-
     Silkscreen() {};
     ~Silkscreen() {};
+ 
+    static double silkscreenLen;
 };
 
 
