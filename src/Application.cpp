@@ -69,15 +69,30 @@ void Application::setExpandedComponments() {
 
 // Expand the boundaries by the gap of componments.
 void Application::moveExpandedComponments() {
+    Polygon polygon = assembly.getPolygon();
     for (std::variant<Line, Arc>& element : expandedAssembly.lines_arcs) {
         if (std::holds_alternative<Line>(element)) {
-            Point2D normalVector = bg::extra::getNormalVector(std::get<Line>(element));
-            normalVector.x(normalVector.x() * (-1));
-            normalVector.y(normalVector.y() * (-1));
+            Line& line = std::get<Line>(element);
+            Point2D normalVector = bg::extra::getNormalVector(line);
             bg::extra::standardization(normalVector);
-            bg::extra::moveBoundary<Line>(std::get<Line>(element), assembly.assemblyGap, normalVector);
+            Point2D middle = bg::extra::getMiddle(line.first, line.second);
+            bg::extra::movePoint2D(middle, expandedAssembly.assemblyGap, normalVector);
+            if (bg::within(middle, polygon)) {
+                normalVector.x(normalVector.x() * (-1));
+                normalVector.y(normalVector.y() * (-1));
+            }
+            bg::extra::moveBoundary<Line>(line, assembly.assemblyGap, normalVector); 
         } else if (std::holds_alternative<Arc>(element)) {
-            std::get<Arc>(element).radius += assembly.assemblyGap;
+            Arc& arc = std::get<Arc>(element);
+            Point2D posi = bg::extra::getMiddle(arc.getPositionOnArc(arc.angle / 2), arc.center);
+            if (bg::within(posi, polygon)) {  // detect arc is outer or inner
+                bg::extra::movePoint2D(arc.begin, expandedAssembly.assemblyGap, bg::extra::getDirectionVector(arc.begin, arc.center));
+                bg::extra::movePoint2D(arc.end, expandedAssembly.assemblyGap, bg::extra::getDirectionVector(arc.end, arc.center));                
+            } else {
+                bg::extra::movePoint2D(arc.begin, expandedAssembly.assemblyGap, bg::extra::getDirectionVector(arc.center, arc.begin));
+                bg::extra::movePoint2D(arc.end, expandedAssembly.assemblyGap, bg::extra::getDirectionVector(arc.center, arc.end));
+            }
+            arc.rewrite(arc.begin, arc.end, arc.center, arc.clockWise);
         }    
     }
     for (Copper& copper : expandedCoppers) {

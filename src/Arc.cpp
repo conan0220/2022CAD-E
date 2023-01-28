@@ -11,6 +11,14 @@ Arc::Arc(Point2D begin, Point2D end, Point2D center, bool clockWise)
     angle = getAngleBetweenBeginAndEnd();
 }
 
+void Arc::rewrite(Point2D begin, Point2D end, Point2D center, bool clockWise) {
+    radius = bg::distance(begin, center);
+    beginAngle = bg::extra::getAngle(center, begin, 0);
+    endAngle = bg::extra::getAngle(center, end, 0);
+    angle = getAngleBetweenBeginAndEnd();
+}
+
+
 double Arc::getArea() const {
     return PI * pow(radius, 2) * (angle / (2 * PI));
 }

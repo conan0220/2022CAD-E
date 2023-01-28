@@ -17,6 +17,7 @@ public:
 
     double getArea() const;
     Point2D getPositionOnArc(double angle_t, int mode = 0) const;
+    void rewrite(Point2D begin, Point2D end, Point2D center, bool clockWise);
     
     Point2D begin;
     Point2D end;

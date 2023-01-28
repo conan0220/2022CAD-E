@@ -28,7 +28,9 @@ double nomalizeAngle(const double& angle, const int& mode = 0);
 void standardization(Point2D& p);
 template <typename T>
 void moveBoundary(T& data, const double& distance, Point2D directionVector);
+void movePoint2D(Point2D& point,const double& distance, Point2D directionVector);
 Point2D getMiddle(const Point2D& first, const Point2D& second);
+Point2D getDirectionVector(const Point2D& begin, const Point2D& end);
 Point2D getNormalVector(const Line& line);
 
 }   // namespace boost::geometry::extra

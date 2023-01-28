@@ -154,6 +154,14 @@ void moveBoundary<Arc>(Arc& data, const double& distance, Point2D directionVecto
     std::cout << "hi";
 }
 
+void movePoint2D(Point2D& point,const double& distance, Point2D directionVector) {
+    boost::geometry::extra::standardization(directionVector);
+    double dx = directionVector.x() * distance;
+    double dy = directionVector.y() * distance;
+    point.x(point.x() + dx);
+    point.y(point.y() + dy);
+}
+
 /**
  * Get the middle point of a line defined by two points.
  * @param first The first point of the line.
@@ -161,8 +169,12 @@ void moveBoundary<Arc>(Arc& data, const double& distance, Point2D directionVecto
  * @return The middle point of the line.
  */
 Point2D getMiddle(const Point2D& first, const Point2D& second) {
-    Point2D middle((first.x() + second.x()) / 2, (second.y() + second.y()) / 2);
+    Point2D middle((first.x() + second.x()) / 2, (first.y() + second.y()) / 2);
     return middle;
+}
+
+Point2D getDirectionVector(const Point2D& begin, const Point2D& end) {
+    return Point2D(end.x() - begin.x(), end.y() - begin.y());
 }
 
 /**

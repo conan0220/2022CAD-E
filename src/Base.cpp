@@ -28,10 +28,9 @@ double Base::getArea() const {
 Polygon Base::getPolygon() const {
     Polygon polygon;
     for (const std::variant<Line, Arc>& element : lines_arcs) {
-        // Element type is Line?
-        if (std::holds_alternative<Line>(element)) {
+        if (std::holds_alternative<Line>(element)) {            // Element type is Line
             bg::append(polygon.outer(), std::get<Line>(element).first);
-        } else if (std::holds_alternative<Arc>(element)) {      // Element type is Arc?
+        } else if (std::holds_alternative<Arc>(element)) {      // Element type is Arc
             Arc arc = std::get<Arc>(element);
             bg::append(polygon.outer(), arc.begin);
             bg::append(polygon.outer(), arc.center);
