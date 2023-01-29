@@ -9,7 +9,7 @@ public:
     Silkscreen() {};
     ~Silkscreen() {};
  
-    static double silkscreenLen;
+    static double LEN;
 };
 
 

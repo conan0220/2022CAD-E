@@ -63,3 +63,12 @@ double Arc::getAngleBetweenBeginAndEnd(int mode) const {
         return bg::extra::radianToDegree(angle_t);
     }
 }
+
+// Print the datas of Arc.
+std::ostream& operator<<(std::ostream& os, const Arc& arc) {
+    os << "begin: (" << arc.begin.x() << ", " << arc.begin.y() << ") ";
+    os << "end: (" << arc.end.x() << ", " << arc.end.y() << ") ";
+    os << "center: (" << arc.center.x() << ", " << arc.center.y() << ") ";
+    os << "clockWise: " << arc.clockWise;
+    return os;
+}

@@ -7,10 +7,13 @@
 #include <stdio.h>
 
 Application::Application() {
+    text::clearTextFile("../res/output.txt");
     preProcessInputData();
     processSilkscreen();
-    text::clearTextFile("../res/output.txt");
     outputToTxt<Assembly>("../res/output.txt", expandedAssembly, "assembly");
+    for (Copper copper : expandedCoppers) {
+        outputToTxt<Copper>("../res/output.txt", copper, "copper");
+    }
 }
 
 /**
@@ -23,7 +26,7 @@ void Application::preProcessInputData() {
     for (std::string str : text) {   // line by line 
         std::vector<double> data = text::extractNumeric(str);      //  numbers in the string
         for (double& i : data)
-            math::roundToDecimal(i, 4);
+            i = math::getRoundToDecimal(i, 4);
         // identify the keyword of str
         if (text::isTargetInString(str, "line")) {
             Line dataTemp = Line(Point2D(data[0], data[1]), Point2D(data[2], data[3]));
@@ -41,16 +44,16 @@ void Application::preProcessInputData() {
                 coppers.back().lines_arcs.push_back(std::variant<Line, Arc>(dataTemp));
             }    
         } else if (text::isTargetInString(str, "coppergap")) {
-            Copper::copperGap = data[0];
+            Copper::GAP = data[0];
         } else if (text::isTargetInString(str, "copper")) {
             targetComponent = "copper";
             coppers.push_back(Copper());
         } else if (text::isTargetInString(str, "assemblygap")) {
-            Assembly::assemblyGap = data[0];
+            Assembly::GAP = data[0];
         } else if (text::isTargetInString(str, "assembly")) {
             targetComponent = "assembly";
         } else if (text::isTargetInString(str, "silkscreenlen")) {
-            Silkscreen::silkscreenLen = data[0];
+            Silkscreen::LEN = data[0];
         }
     }
 }
@@ -67,42 +70,40 @@ void Application::setExpandedComponments() {
         expandedCoppers.push_back(copper);
 }
 
-// Expand the boundaries by the gap of componments.
-void Application::moveExpandedComponments() {
-    Polygon polygon = assembly.getPolygon();
-    for (std::variant<Line, Arc>& element : expandedAssembly.lines_arcs) {
+template <typename Componment>
+void Application::moveExpandedComponment(Componment& componment, const double& distance) {
+    Polygon polygon = componment.getPolygon();
+    for (std::variant<Line, Arc>& element : componment.lines_arcs) {
         if (std::holds_alternative<Line>(element)) {
             Line& line = std::get<Line>(element);
             Point2D normalVector = bg::extra::getNormalVector(line);
-            bg::extra::standardization(normalVector);
             Point2D middle = bg::extra::getMiddle(line.first, line.second);
-            bg::extra::movePoint2D(middle, expandedAssembly.assemblyGap, normalVector);
+            bg::extra::movePoint2D(middle, 0.00001, normalVector);
             if (bg::within(middle, polygon)) {
                 normalVector.x(normalVector.x() * (-1));
                 normalVector.y(normalVector.y() * (-1));
             }
-            bg::extra::moveBoundary<Line>(line, assembly.assemblyGap, normalVector); 
+            bg::extra::moveBoundary<Line>(line, distance, normalVector); 
         } else if (std::holds_alternative<Arc>(element)) {
             Arc& arc = std::get<Arc>(element);
             Point2D posi = bg::extra::getMiddle(arc.getPositionOnArc(arc.angle / 2), arc.center);
-            if (bg::within(posi, polygon)) {  // detect arc is outer or inner
-                bg::extra::movePoint2D(arc.begin, expandedAssembly.assemblyGap, bg::extra::getDirectionVector(arc.begin, arc.center));
-                bg::extra::movePoint2D(arc.end, expandedAssembly.assemblyGap, bg::extra::getDirectionVector(arc.end, arc.center));                
+            if (bg::within(posi, polygon)) {
+                bg::extra::movePoint2D(arc.begin, distance, bg::extra::getDirectionVector(arc.begin, arc.center));
+                bg::extra::movePoint2D(arc.end, distance, bg::extra::getDirectionVector(arc.end, arc.center));                
             } else {
-                bg::extra::movePoint2D(arc.begin, expandedAssembly.assemblyGap, bg::extra::getDirectionVector(arc.center, arc.begin));
-                bg::extra::movePoint2D(arc.end, expandedAssembly.assemblyGap, bg::extra::getDirectionVector(arc.center, arc.end));
+                bg::extra::movePoint2D(arc.begin, distance, bg::extra::getDirectionVector(arc.center, arc.begin));
+                bg::extra::movePoint2D(arc.end, distance, bg::extra::getDirectionVector(arc.center, arc.end));
             }
             arc.rewrite(arc.begin, arc.end, arc.center, arc.clockWise);
         }    
     }
+}
+
+// Expand the boundaries by the gap of componments.
+void Application::moveExpandedComponments() {
+    moveExpandedComponment<Assembly>(expandedAssembly, expandedAssembly.GAP);
     for (Copper& copper : expandedCoppers) {
-        for (std::variant<Line, Arc>& element : copper.lines_arcs) {
-            if (std::holds_alternative<Line>(element)) {
-
-            } else if (std::holds_alternative<Arc>(element)) {
-
-            }
-        }
+        moveExpandedComponment<Copper>(copper, copper.GAP);
     }
 }
 
@@ -114,19 +115,39 @@ void Application::moveExpandedComponments() {
  * @return None.
  */
 template <typename Componment>
-void Application::outputToTxt(std::string filePath, const Componment& componment, const std::string componmentName) {
+void Application::outputToTxt(std::string filePath, const Componment& componment, const std::string& componmentName) {
     std::vector<std::string> text;
     text.push_back(componmentName);
     for (const std::variant<Line, Arc>& element : componment.lines_arcs) {
         if (std::holds_alternative<Line>(element)) {    // Element type is Line?
             Line line = std::get<Line>(element);
-            text.push_back("line," + std::to_string(line.first.x()) + "," + std::to_string(line.first.y()) + "," + std::to_string(line.second.x()) + "," + std::to_string(line.second.y()));
+            double x1 = math::getRoundToDecimal(line.first.x(), 4);
+            double x2 = math::getRoundToDecimal(line.second.x(), 4);
+            double y1 = math::getRoundToDecimal(line.first.y(), 4);
+            double y2 = math::getRoundToDecimal(line.second.y(), 4);
+            text.push_back("line," + std::to_string(x1) + "," + std::to_string(y1) + "," + std::to_string(x2) + "," + std::to_string(y2));
         } else if (std::holds_alternative<Arc>(element)) {  // Element type is Arc?
             Arc arc = std::get<Arc>(element);
-            text.push_back("arc," + std::to_string(arc.begin.x()) + "," + std::to_string(arc.begin.y()) + "," + std::to_string(arc.end.x()) + "," + std::to_string(arc.end.y()) + "," + std::to_string(arc.center.x()) + "," + std::to_string(arc.center.y()) + "," + (arc.clockWise ? "CW" : "CCW"));
+            double b_x = math::getRoundToDecimal(arc.begin.x(), 4);
+            double e_x = math::getRoundToDecimal(arc.end.x(), 4);
+            double c_x = math::getRoundToDecimal(arc.center.x(), 4);
+            double b_y = math::getRoundToDecimal(arc.begin.y(), 4);
+            double e_y = math::getRoundToDecimal(arc.end.y(), 4);
+            double c_y = math::getRoundToDecimal(arc.center.y(), 4);
+            text.push_back("arc," + std::to_string(b_x) + "," + std::to_string(b_y) + "," + std::to_string(e_x) + "," + std::to_string(e_y) + "," + std::to_string(c_x) + "," + std::to_string(c_y) + "," + (arc.clockWise ? "CW" : "CCW"));
         }
     }
     text::writeFile(text, filePath, false);
 }
 
+void Application::outputPoint2DToTxt(std::string filePath, const std::vector<Point2D>& points) {
+    std::vector<std::string> text;
+    text.push_back("points");     // points
+    for (const Point2D& point : points) {
+        double x = math::getRoundToDecimal(point.x(), 4);
+        double y = math::getRoundToDecimal(point.y(), 4);
+        text.push_back("point," + std::to_string(x) + "," + std::to_string(y));
+    }
+    text::writeFile(text, filePath, false);
+}
 

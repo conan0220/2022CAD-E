@@ -2,7 +2,7 @@
 #include <variant>
 #include <vector>
 
-double Assembly::assemblyGap = 0;
+double Assembly::GAP = 0;
 
 /**
  * Copy object.

@@ -1,6 +1,6 @@
 #include "Copper.h"
 
-double Copper::copperGap = 0;
+double Copper::GAP = 0;
 
 /**
  * Copy object.

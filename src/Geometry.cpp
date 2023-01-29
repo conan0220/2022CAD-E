@@ -192,3 +192,16 @@ Point2D getNormalVector(const Line& line)  {
 }   // namespace boost::geometry
 
 }   // namespace boost
+
+// Print the datas of Line.
+std::ostream& operator<<(std::ostream& os, const Line& line) {
+    os << "first: (" << line.first.x() << ", " << line.first.y() << ") ";
+    os << "second: (" << line.second.x() << ", " << line.second.y() << ") ";
+    return os;
+}
+
+// Print the datas of Point2D
+std::ostream& operator<<(std::ostream& os, const Point2D& point) {
+    os << "(" << point.x() << ", " << point.y() << ") ";
+    return os;
+}
