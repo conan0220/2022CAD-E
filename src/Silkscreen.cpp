@@ -1,3 +1,3 @@
 #include "Silkscreen.h"
 
-double Silkscreen::silkscreenLen = 0;
+double Silkscreen::LEN = 0;

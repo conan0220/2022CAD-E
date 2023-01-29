@@ -39,4 +39,7 @@ Point2D getNormalVector(const Line& line);
 
 }   // namespace boost
 
+std::ostream& operator<<(std::ostream& os, const Line& line);
+std::ostream& operator<<(std::ostream& os, const Point2D& point);
+
 #endif /* _GEOMETRY_H_*/

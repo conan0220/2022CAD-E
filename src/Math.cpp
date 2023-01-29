@@ -22,9 +22,9 @@ double cosineLaw(const Point2D& p1, const Point2D& p2, const Point2D& p3) {
  * @param num The number that need to be rounded.
  * @param decimalPlace The number of decimal places to round to.
  */
-void roundToDecimal(double& num, int decimalPlace) {
+double getRoundToDecimal(const double& num, int decimalPlace) {
     double factor = pow(10, decimalPlace);
-    num = round(num * factor) / factor;
+    return round(num * factor) / factor;
 }
 
 }   // namespace math

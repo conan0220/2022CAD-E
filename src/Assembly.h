@@ -11,7 +11,7 @@ public:
 
     void operator=(const Assembly& other);
 
-    static double assemblyGap;
+    static double GAP;
 };
 
 

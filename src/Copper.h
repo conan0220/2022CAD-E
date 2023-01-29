@@ -11,7 +11,7 @@ public:
 
     void operator=(const Copper& other);
 
-    static double copperGap;
+    static double GAP;
 };
 
 

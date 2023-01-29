@@ -8,6 +8,10 @@ class Application {
 public:
     Application();
     ~Application() {}
+    
+    template <typename Componment>
+    static void outputToTxt(std::string filePath, const Componment& componment, const std::string& componmentName);
+    static void outputPoint2DToTxt(std::string filePath, const std::vector<Point2D>& points);
 
     Assembly assembly;
     std::vector<Copper> coppers;
@@ -19,9 +23,9 @@ private:
     void preProcessInputData();
     void processSilkscreen();
     void setExpandedComponments();
-    void moveExpandedComponments();
     template <typename Componment>
-    void outputToTxt(std::string filePath, const Componment& componment, const std::string componmentName);
+    void moveExpandedComponment(Componment& componment, const double& distance);
+    void moveExpandedComponments();
 };
 
 #endif /* _APPLICATION_H_ */
