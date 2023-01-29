@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import nums_from_string as nfs
 import math
+import os
 
 
 def setFigure(pixel):
@@ -20,7 +21,8 @@ def plot(components, color="blue"):
 
 
 def loadFile(filePath):
-    f = open(filePath, 'r')
+    absolute_file_path = os.path.abspath(filePath)
+    f = open(absolute_file_path, 'r')
     lines = f.readlines()
     f.close()
     return lines
@@ -151,8 +153,8 @@ def calculateDegree(center, n):
 
 
 
-preprocessData("D:/repos/2022CAD-E/res/testing-data.txt", assemblies=assemblies, coppers=coppers)
-preprocessData("D:/repos/2022CAD-E/res/output.txt", assemblies=expanded_assemblies, coppers=expanded_coppers, set_of_points=set_of_points)
+preprocessData("res/testing-data.txt", assemblies=assemblies, coppers=coppers)
+preprocessData("res/output.txt", assemblies=expanded_assemblies, coppers=expanded_coppers, set_of_points=set_of_points)
 setFigure(pixel=130)
 
 plot(assemblies, "white")
