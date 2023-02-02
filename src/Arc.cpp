@@ -12,6 +12,10 @@ Arc::Arc(Point2D begin, Point2D end, Point2D center, bool clockWise)
 }
 
 void Arc::rewrite(Point2D begin, Point2D end, Point2D center, bool clockWise) {
+    this->begin = begin;
+    this->end = end;
+    this->center = center;
+    this->clockWise = clockWise;
     radius = bg::distance(begin, center);
     beginAngle = bg::extra::getAngle(center, begin, 0);
     endAngle = bg::extra::getAngle(center, end, 0);

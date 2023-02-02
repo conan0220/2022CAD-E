@@ -138,7 +138,7 @@ void moveBoundary(T& data, const double& distance, Point2D directionVector) {}
  * @param directionVector The direction in which to move the line compare to (0, 0).
  * @return None.
  */
-template < >
+template <>
 void moveBoundary(Line& data, const double& distance, Point2D directionVector) {
     boost::geometry::extra::standardization(directionVector);
     double dx = directionVector.x() * distance;
@@ -149,17 +149,13 @@ void moveBoundary(Line& data, const double& distance, Point2D directionVector) {
     data.second.y(data.second.y() + dy);
 }
 
-template < >
-void moveBoundary<Arc>(Arc& data, const double& distance, Point2D directionVector) {
-    std::cout << "hi";
-}
-
-void movePoint2D(Point2D& point,const double& distance, Point2D directionVector) {
+Point2D getMovePoint2D(Point2D point,const double& distance, Point2D directionVector) {
     boost::geometry::extra::standardization(directionVector);
     double dx = directionVector.x() * distance;
     double dy = directionVector.y() * distance;
     point.x(point.x() + dx);
     point.y(point.y() + dy);
+    return point;
 }
 
 /**
@@ -185,6 +181,16 @@ Point2D getNormalVector(const Line& line)  {
     // vector of line
     Point2D segmentVector = Point2D(line.first.x() - line.second.x(), line.first.y() - line.second.y());
     return Point2D(-segmentVector.y(), segmentVector.x());
+}
+
+void extendLine(Line& line, double multiple) {
+    double length = bg::distance(line.first, line.second);
+    double dx = (line.second.x() - line.first.x()) / length * multiple;
+    double dy = (line.second.y() - line.first.y()) / length * multiple;
+    line.first.x(line.first.x() - dx);
+    line.first.y(line.first.y() - dy);
+    line.second.x(line.second.x() + dx);
+    line.second.y(line.second.y() + dy);
 }
 
 }   // namespace boost::geometry::extra

@@ -31,7 +31,7 @@ def numsFromString(str):
     return nfs.get_nums(str)
 
 
-def preprocessData(file_path, assemblies=None, coppers=None, set_of_points=None):
+def preprocessData(file_path, assemblies=None, coppers=None, set_of_points=None, silkscreens=None):
     # read data and put it into components
     text = loadFile(file_path)
     presentComponent = "None"
@@ -45,20 +45,27 @@ def preprocessData(file_path, assemblies=None, coppers=None, set_of_points=None)
         elif "points" in line:
             presentComponent = "points"
             set_of_points.append(Points())
+        elif "silkscreen" in line:
+            presentComponent = "silkscreen"
+            silkscreens.append(Silkscreen())
         elif "line" in line:
             dataOfLine = numsFromString(line)
             newLine = Line(Point(dataOfLine[0], dataOfLine[1]), Point(dataOfLine[2], dataOfLine[3]))
             if presentComponent == "assembly":
                 assemblies[-1].lines.append(newLine)
-            if presentComponent == "copper":
+            elif presentComponent == "copper":
                 coppers[-1].lines.append(newLine)
+            elif presentComponent == "silkscreen":
+                silkscreens[-1].lines.append(newLine)
         elif "arc" in line:
             dataOfLine = numsFromString(line)
             newArc = Arc(Point(dataOfLine[0], dataOfLine[1]), Point(dataOfLine[2], dataOfLine[3]), Point(dataOfLine[4], dataOfLine[5]), "CCW" not in line)
             if presentComponent == "assembly":
                 assemblies[-1].arcs.append(newArc)
-            if presentComponent == "copper":
+            elif presentComponent == "copper":
                 coppers[-1].arcs.append(newArc)
+            elif presentComponent == "silkscreen":
+                silkscreens[-1].arcs.append(newArc)
         elif "point" in line:
             dataOfLine = numsFromString(line)
             newPoint = Point(dataOfLine[0], dataOfLine[1])
@@ -70,6 +77,7 @@ def preprocessData(file_path, assemblies=None, coppers=None, set_of_points=None)
 # Components
 assemblies = []
 coppers = []
+silkscreens = []
 
 expanded_assemblies = []
 expanded_coppers = []
@@ -96,10 +104,8 @@ class Copper(Base):
 class Points(Base):
     None
 
-
-
-
-
+class Silkscreen(Base):
+    None
 
 
 # Datas
@@ -153,13 +159,14 @@ def calculateDegree(center, n):
 
 
 
-preprocessData("res/testing-data.txt", assemblies=assemblies, coppers=coppers)
-preprocessData("res/output.txt", assemblies=expanded_assemblies, coppers=expanded_coppers, set_of_points=set_of_points)
-setFigure(pixel=130)
+preprocessData("res/input.txt", assemblies=assemblies, coppers=coppers, silkscreens=silkscreens)
+preprocessData("res/output.txt", assemblies=expanded_assemblies, coppers=expanded_coppers, set_of_points=set_of_points, silkscreens=silkscreens)
+setFigure(pixel=100)
 
 plot(assemblies, "white")
 plot(coppers, "white")
-plot(expanded_assemblies, "yellow")
-plot(expanded_coppers, "yellow")
+# plot(expanded_assemblies, "red")
+# plot(expanded_coppers, "red")
+plot(silkscreens, "yellow")
 # plot(set_of_points, "red")
 plt.show()              

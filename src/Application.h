@@ -26,6 +26,11 @@ private:
     template <typename Componment>
     void moveExpandedComponment(Componment& componment, const double& distance);
     void moveExpandedComponments();
+    template <typename Componment>
+    void connectExpandedComponment(Componment& componment);
+    void connectExpandedComponments();
+    template <typename Element1, typename Element2>
+    void connect(Element1& element1, Element2& element2);
 };
 
 #endif /* _APPLICATION_H_ */

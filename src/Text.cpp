@@ -50,12 +50,12 @@ std::vector<double> extractNumeric(const std::string& input) {
   std::vector<double> values;
   std::regex pattern("(-?\\d+\\.?\\d*)");
   std::smatch matches;
-  // 查找字串中所有符合的值
+  // Find all values that match in the string
   std::string::const_iterator search_start(input.cbegin());
   while (std::regex_search(search_start, input.cend(), matches, pattern)) {
-    // 將匹配到的結果轉換為 double 並存入 vector
+    // Convert the matched result to double and store it in the vector
     values.push_back(std::stod(matches[1].str()));
-    // 設定下一次搜尋的位置
+    // Set the position for the next search
     search_start = matches.suffix().first;
   }
   return values;
